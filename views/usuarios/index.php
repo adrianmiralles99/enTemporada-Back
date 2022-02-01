@@ -1,9 +1,10 @@
 <?php
 
-use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\ActionColumn;
+use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\Usuarios;
+use yii\grid\ActionColumn;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UsuariosSearch */
@@ -38,9 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
             //'descripcion:ntext',
             //'localidad',
             //'direccion',
-            //'tipo',
+            'tipo',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Usuarios $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }

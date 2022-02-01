@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use app\models\Likes;
+use app\models\Recetas;
+use app\models\Favoritos;
 
 /**
  * This is the model class for table "usuarios".
@@ -76,7 +79,7 @@ class Usuarios extends \yii\db\ActiveRecord
      */
     public function getFavoritos()
     {
-        return $this->hasMany(Favoritos::className(), ['id_usuario' => 'id']);
+        return $this->hasMany(Favoritos::class, ['id_usuario' => 'id']);
     }
 
     /**
@@ -86,7 +89,7 @@ class Usuarios extends \yii\db\ActiveRecord
      */
     public function getLikes()
     {
-        return $this->hasMany(Likes::className(), ['id_usuario' => 'id']);
+        return $this->hasMany(Likes::class, ['id_usuario' => 'id']);
     }
 
     /**
@@ -96,6 +99,42 @@ class Usuarios extends \yii\db\ActiveRecord
      */
     public function getRecetas()
     {
-        return $this->hasMany(Recetas::className(), ['id_usuario' => 'id']);
+        return $this->hasMany(Recetas::class, ['id_usuario' => 'id']);
+    }
+
+
+
+    // CLASES CREADAS
+
+    public static function findByUsername($username)
+    {
+        return static::findOne(['nick' => $username]);
+    }
+
+    public static function findIdentity($id)
+    {
+        return static::findOne($id);
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getAuthKey()
+    {
+    }
+
+    public function validateAuthKey($authKey)
+    {
+    }
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+    }
+
+    // Comprueba que el password que se le pasa es correcto
+    public function validatePassword($password)
+    {
+        return $this->password === md5($password); // Si se utiliza otra función de encriptación distinta a md5, habrá que cambiar esta línea
     }
 }
