@@ -32,7 +32,9 @@ AppAsset::register($this);
         if (Yii::$app->user->isGuest) {
             $items = [
                 ['label' => 'Inicio', 'url' => ['/site/index']],
-                ['label' => 'Login', 'url' => ['/site/login']]
+                ['label' => 'Login', 'url' => ['/site/login']],
+                ['label' => 'Recetas', 'url' => ['/recetas']],
+
             ];
         } else {
             $items = ['label' => 'Administrador', 'items' => [
