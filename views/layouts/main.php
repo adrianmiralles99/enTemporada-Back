@@ -35,17 +35,21 @@ AppAsset::register($this);
                 ['label' => 'Login', 'url' => ['/site/login']]
             ];
         } else {
-            $items = ['label' => 'Administrador', 'items' => [
-                ['label' => 'Petición de registro', 'url' => ['/usuarios']],
-                ['label' => 'Productos', 'url' => ['/producto']],
-                ['label' => 'Recetas', 'url' => ['/recetas']],
-                ['label' => 'Usuarios registrados', 'url' => ['/usuarios']],
-            ]];
+            $items =
+                [
+                    ['label' => 'Administrador', 'items' => [
+                        ['label' => 'Petición de registro', 'url' => ['/usuarios', "pendiente" => "P"]],
+                        ['label' => 'Productos', 'url' => ['/producto']],
+                        ['label' => 'Recetas', 'url' => ['/recetas']],
+                        ['label' => 'Usuarios registrados', 'url' => ['/usuarios',"pendiente" => "A"]],
+                    ]]
+                ];
+
 
             $items[] = '<li>'
                 . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
                 . Html::submitButton(
-                    'Salir (' . Yii::$app->user->identity->nombre . Yii::$app->user->identity->rol . ')',
+                    'Salir (' . Yii::$app->user->identity->nombre . ' - ' . Yii::$app->user->identity->TipoText . ')',
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()

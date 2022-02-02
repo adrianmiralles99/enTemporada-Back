@@ -3,9 +3,6 @@
 namespace app\models;
 
 use Yii;
-use app\models\Likes;
-use app\models\Recetas;
-use app\models\Favoritos;
 
 /**
  * This is the model class for table "usuarios".
@@ -26,8 +23,10 @@ use app\models\Favoritos;
  * @property Likes[] $likes
  * @property Recetas[] $recetas
  */
-class Usuarios extends \yii\db\ActiveRecord
+class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+    static $tipoUsuarios = ["U" => "Usuario",  "A" => "Administrdor"];
+
     /**
      * {@inheritdoc}
      */
@@ -55,6 +54,10 @@ class Usuarios extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    public function getTipoText()
+    {
+        return self::$tipoUsuarios[$this->tipo];
+    }
     public function attributeLabels()
     {
         return [
@@ -102,10 +105,6 @@ class Usuarios extends \yii\db\ActiveRecord
         return $this->hasMany(Recetas::class, ['id_usuario' => 'id']);
     }
 
-
-
-    // CLASES CREADAS
-
     public static function findByUsername($username)
     {
         return static::findOne(['nick' => $username]);
@@ -135,6 +134,9 @@ class Usuarios extends \yii\db\ActiveRecord
     // Comprueba que el password que se le pasa es correcto
     public function validatePassword($password)
     {
+        // var_dump($password);
+        // var_dump(md5($password));
+        // die();
         return $this->password === md5($password); // Si se utiliza otra función de encriptación distinta a md5, habrá que cambiar esta línea
     }
 }

@@ -36,10 +36,11 @@ class UsuariosController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($pendiente = "")
     {
         $searchModel = new UsuariosSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        // $searchModel->tipo = "A";
+        $dataProvider = $searchModel->search($this->request->queryParams, $pendiente);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
