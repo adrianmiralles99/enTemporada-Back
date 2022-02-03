@@ -2,134 +2,37 @@
 
 namespace app\controllers;
 
-use app\models\Usuarios;
-use app\models\UsuariosSearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use yii\rest\ActiveController;
+use app\controllers\BaseController;
+use yii\filters\auth\HttpBearerAuth;
 
 /**
  * UsuariosController implements the CRUD actions for Usuarios model.
  */
-class UsuariosController extends Controller
+class UsuariosController extends BaseController
 {
-    /**
-     * @inheritDoc
-     */
-    public function behaviors()
+    public $modelClass = 'app\models\Usuarios';
+
+    public function actionAuthenticate()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-            ]
-        );
-    }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Si se envían los datos en formato raw dentro de la petición http, se recogen así:
+            $params = json_decode(file_get_contents("php://input"), false);
+            @$username = $params->nick;
+            @$password = $params->password;
+            // Si se envían los datos de la forma habitual (form-data), se reciben en $_POST:
+            //$username=$_POST['username'];
+            //$password=$_POST['password' ];
 
-    /**
-     * Lists all Usuarios models.
-     *
-     * @return string
-     */
-    public function actionIndex($pendiente = "")
-    {
-        $searchModel = new UsuariosSearch();
-        // $searchModel->tipo = "A";
-        $dataProvider = $searchModel->search($this->request->queryParams, $pendiente);
+            if ($u = \app\models\Usuarios::findOne(['nick' => $username]))
+                if ($u->password == md5($password)) { //o crypt, según esté en la BD
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
+                    return ['token' => $u->token, 'id' => $u->id, 'nombre' => $u->nombre];
+                }
 
-    /**
-     * Displays a single Usuarios model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Usuarios model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate()
-    {
-        $model = new Usuarios();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
+            return ['error' => 'Usuario incorrecto. ' . $username];
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
-    /**
-     * Updates an existing Usuarios model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing Usuarios model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Usuarios model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Usuarios the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Usuarios::findOne(['id' => $id])) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
+    
 }

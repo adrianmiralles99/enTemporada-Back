@@ -62,7 +62,7 @@ class Producto extends \yii\db\ActiveRecord
      */
     public function getCalendarios()
     {
-        return $this->hasMany(Calendario::className(), ['id_prod' => 'id']);
+        return $this->hasMany(Calendario::class, ['id_prod' => 'id']);
     }
 
     /**
@@ -72,6 +72,12 @@ class Producto extends \yii\db\ActiveRecord
      */
     public function getRecetas()
     {
-        return $this->hasMany(Recetas::className(), ['id_prodp' => 'id']);
+        return $this->hasMany(Recetas::class, ['id_prodp' => 'id']);
+    }
+
+    public function afterFind()
+    {
+        $this->info_nut = json_decode($this->info_nut, true);
+        return parent::afterFind();
     }
 }
