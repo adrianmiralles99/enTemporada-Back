@@ -18,7 +18,7 @@ class UsuariosSearch extends Usuarios
     {
         return [
             [['id'], 'integer'],
-            [['nombre', 'apellidos', 'nick', 'correo', 'password', 'imagen', 'descripcion', 'localidad', 'direccion', 'tipo', 'estado'], 'safe'],
+            [['nombre', 'apellidos', 'nick', 'correo', 'password', 'imagen', 'descripcion', 'localidad', 'direccion', 'tipo', 'estado', 'token', 'fecha_cad'], 'safe'],
         ];
     }
 
@@ -70,7 +70,9 @@ class UsuariosSearch extends Usuarios
             ->andFilterWhere(['like', 'descripcion', $this->descripcion])
             ->andFilterWhere(['like', 'localidad', $this->localidad])
             ->andFilterWhere(['like', 'direccion', $this->direccion])
-            ->andFilterWhere(['like', 'tipo', $this->tipo]);
+            ->andFilterWhere(['like', 'tipo', $this->tipo])
+            ->andFilterWhere(['like', 'token', $this->token])
+            ->andFilterWhere(['like', 'fecha_cad', $this->fecha_cad]);
         if ($pendiente) {
             $query->andWhere("estado='$pendiente'");
         }

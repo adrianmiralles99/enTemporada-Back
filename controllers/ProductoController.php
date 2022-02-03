@@ -12,5 +12,13 @@ use yii\rest\ActiveController;
 class ProductoController extends BaseController
 {
     public $modelClass = 'app\models\Producto';
-    public $authenable=false;
+    public $authenable = false;
+
+    public function actions()
+    {
+        $actions = parent::actions();
+        //Eliminamos acciones de crear y eliminar apuntes. Eliminamos update para personalizarla
+        unset($actions['delete'], $actions['create'], $actions['update']);
+        return $actions;
+    }
 }

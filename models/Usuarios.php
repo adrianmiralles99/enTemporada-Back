@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use app\models\Likes;
+use app\models\Recetas;
+use app\models\Favoritos;
 
 /**
  * This is the model class for table "usuarios".
@@ -19,6 +22,8 @@ use Yii;
  * @property string $direccion
  * @property string $tipo
  * @property string $estado
+ * @property string $token
+ * @property date $fecha_cad
  *
  * @property Favoritos[] $favoritos
  * @property Likes[] $likes
@@ -43,7 +48,7 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     public function rules()
     {
         return [
-            [['nombre', 'apellidos', 'nick', 'correo', 'password', 'imagen', 'descripcion', 'localidad', 'direccion', 'tipo', 'estado','token','fecha_cad'], 'required'],
+            [['nombre', 'apellidos', 'nick', 'correo', 'password', 'imagen', 'descripcion', 'localidad', 'direccion', 'tipo', 'estado', 'token', 'fecha_cad'], 'required'],
             [['descripcion', 'tipo', 'estado'], 'string'],
             [['nombre', 'localidad'], 'string', 'max' => 20],
             [['apellidos', 'imagen'], 'string', 'max' => 40],
@@ -145,14 +150,12 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     public static function findIdentityByAccessToken($token, $type = null)
     {
 
-        $us = self::findOne(['token' => $token]);
-        var_dump(md5(date("Y-m-d H:i:s")));
-        die();
+        $usuario = self::findOne(['token' => $token]);
         // Por si caduca
-        // if($us->fecha){
+        // if ($usuario->fecha <= date("Y-m-d")) {
 
         // }
-        // return self::findOne(['token' => $token]);
+        return $usuario;
     }
 
     // Comprueba que el password que se le pasa es correcto
