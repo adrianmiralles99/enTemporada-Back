@@ -151,10 +151,12 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     {
 
         $usuario = self::findOne(['token' => $token]);
-        // Por si caduca
-        // if ($usuario->fecha <= date("Y-m-d")) {
 
-        // }
+        // Por si caduca
+        if ($usuario->fecha <= date("Y-m-d")) {
+            $usuario->token = md5(date("Y-m-d") . $usuario->id);
+            $usuario->save();
+        }
         return $usuario;
     }
 

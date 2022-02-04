@@ -80,4 +80,7 @@ class Producto extends \yii\db\ActiveRecord
         $this->info_nut = json_decode($this->info_nut, true);
         return parent::afterFind();
     }
+
+
+    // expand -> extrafield
 }
