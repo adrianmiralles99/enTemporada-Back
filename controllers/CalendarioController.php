@@ -3,15 +3,15 @@
 namespace app\controllers;
 
 use app\models\Calendario;
-use app\models\CalendarioSearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\rest\ActiveController;
+use app\models\CalendarioSearch;
+use yii\web\NotFoundHttpException;
 
 /**
  * CalendarioController implements the CRUD actions for Calendario model.
  */
-class CalendarioController extends Controller
+class CalendarioController extends ActiveController
 {
     /**
      * @inheritDoc
@@ -22,7 +22,7 @@ class CalendarioController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],

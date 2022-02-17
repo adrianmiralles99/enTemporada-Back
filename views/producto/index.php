@@ -1,10 +1,10 @@
 <?php
 
-use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\ActionColumn;
+use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\Producto;
+use yii\grid\ActionColumn;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ProductoSearch */
@@ -33,11 +33,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'nombre',
             'imagen',
             'descripcion:ntext',
-            'info_nut:ntext',
+            // 'info_nut:ntext',
             //'tipo',
             //'color',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Producto $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }

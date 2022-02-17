@@ -1,10 +1,10 @@
 <?php
 
-use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\ActionColumn;
-use app\models\Usuarios;
+use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\Usuarios;
+use yii\grid\ActionColumn;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UsuariosSearch */

@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'mes',
             'estado',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Calendario $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
