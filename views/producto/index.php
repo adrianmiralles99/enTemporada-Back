@@ -33,8 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'nombre',
             'imagen',
             'descripcion:ntext',
-            // 'info_nut:ntext',
-            //'tipo',
+            'info_nut:ntext',
+            'tipoArticulo',
             //'color',
             [
                 'class' => ActionColumn::class,

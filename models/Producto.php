@@ -75,12 +75,17 @@ class Producto extends \yii\db\ActiveRecord
         return $this->hasMany(Recetas::class, ['id_prodp' => 'id']);
     }
 
-    public function afterFind()
-    {
-        $this->info_nut = json_decode($this->info_nut, true);
-        return parent::afterFind();
+    // public function afterFind()
+    // {
+    //     $this->info_nut = json_decode($this->info_nut, true);
+    //     return parent::afterFind();
+    // }
+    
+    static $articulo = ["V" => "Verdura",  "F" => "Fruta"];
+
+    public function getTipoArticulo(){
+        return self::$articulo[$this->tipo];
     }
 
-
-    // expand -> extrafield
+    
 }
