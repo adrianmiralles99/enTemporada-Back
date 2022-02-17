@@ -17,8 +17,8 @@ class UsuariosSearch extends Usuarios
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['nombre', 'apellidos', 'nick', 'correo', 'password', 'imagen', 'descripcion', 'localidad', 'direccion', 'tipo'], 'safe'],
+            [['id', 'exp', 'id_ultima_receta'], 'integer'],
+            [['nombre', 'apellidos', 'nick', 'correo', 'password', 'imagen', 'descripcion', 'localidad', 'direccion', 'tipo', 'estado', 'token', 'fecha_cad'], 'safe'],
         ];
     }
 
@@ -59,6 +59,9 @@ class UsuariosSearch extends Usuarios
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'fecha_cad' => $this->fecha_cad,
+            'exp' => $this->exp,
+            'id_ultima_receta' => $this->id_ultima_receta,
         ]);
 
         $query->andFilterWhere(['like', 'nombre', $this->nombre])
@@ -70,7 +73,10 @@ class UsuariosSearch extends Usuarios
             ->andFilterWhere(['like', 'descripcion', $this->descripcion])
             ->andFilterWhere(['like', 'localidad', $this->localidad])
             ->andFilterWhere(['like', 'direccion', $this->direccion])
-            ->andFilterWhere(['like', 'tipo', $this->tipo]);
+            ->andFilterWhere(['like', 'tipo', $this->tipo])
+            ->andFilterWhere(['like', 'estado', $this->estado])
+            ->andFilterWhere(['like', 'token', $this->token]);
+
         if ($pendiente) {
             $query->andWhere("estado='$pendiente'");
         }

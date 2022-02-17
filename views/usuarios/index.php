@@ -1,10 +1,10 @@
 <?php
 
-use yii\helpers\Url;
 use yii\helpers\Html;
-use yii\grid\GridView;
-use app\models\Usuarios;
+use yii\helpers\Url;
 use yii\grid\ActionColumn;
+use app\models\Usuarios;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UsuariosSearch */
@@ -40,6 +40,11 @@ $this->params['breadcrumbs'][] = $this->title;
             //'localidad',
             //'direccion',
             //'tipo',
+            //'estado',
+            //'token',
+            //'fecha_cad',
+            //'exp',
+            //'id_ultima_receta',
             [
                 'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Usuarios $model, $key, $index, $column) {

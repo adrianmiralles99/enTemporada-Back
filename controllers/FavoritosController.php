@@ -2,16 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\Calendario;
-use app\models\CalendarioSearch;
+use app\models\Favoritos;
+use app\models\FavoritosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CalendarioController implements the CRUD actions for Calendario model.
+ * FavoritosController implements the CRUD actions for Favoritos model.
  */
-class CalendarioController extends Controller
+class FavoritosController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +32,13 @@ class CalendarioController extends Controller
     }
 
     /**
-     * Lists all Calendario models.
+     * Lists all Favoritos models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new CalendarioSearch();
+        $searchModel = new FavoritosSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,8 +48,8 @@ class CalendarioController extends Controller
     }
 
     /**
-     * Displays a single Calendario model.
-     * @param int $id
+     * Displays a single Favoritos model.
+     * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -61,13 +61,13 @@ class CalendarioController extends Controller
     }
 
     /**
-     * Creates a new Calendario model.
+     * Creates a new Favoritos model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Calendario();
+        $model = new Favoritos();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -83,9 +83,9 @@ class CalendarioController extends Controller
     }
 
     /**
-     * Updates an existing Calendario model.
+     * Updates an existing Favoritos model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id
+     * @param int $id ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -103,9 +103,9 @@ class CalendarioController extends Controller
     }
 
     /**
-     * Deletes an existing Calendario model.
+     * Deletes an existing Favoritos model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id
+     * @param int $id ID
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -117,15 +117,15 @@ class CalendarioController extends Controller
     }
 
     /**
-     * Finds the Calendario model based on its primary key value.
+     * Finds the Favoritos model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id
-     * @return Calendario the loaded model
+     * @param int $id ID
+     * @return Favoritos the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Calendario::findOne(['id' => $id])) !== null) {
+        if (($model = Favoritos::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

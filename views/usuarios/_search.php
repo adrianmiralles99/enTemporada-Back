@@ -37,6 +37,16 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'tipo') ?>
 
+    <?php // echo $form->field($model, 'estado') ?>
+
+    <?php // echo $form->field($model, 'token') ?>
+
+    <?php // echo $form->field($model, 'fecha_cad') ?>
+
+    <?php // echo $form->field($model, 'exp') ?>
+
+    <?php // echo $form->field($model, 'id_ultima_receta') ?>
+
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>

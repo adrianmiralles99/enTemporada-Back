@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use app\models\Calendario;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CalendarioSearch */
@@ -28,14 +29,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_calendario',
+            'id',
             'id_prod',
             'mes',
             'estado',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Calendario $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id_calendario' => $model->id_calendario]);
+                    return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
         ],

@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use app\models\Recetas;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RecetasSearch */
@@ -31,9 +32,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'id_usuario',
             'tipo',
-            'datos:ntext',
             'fecha',
-            //'id_prodp',
+            'id_prodp',
+            //'estado',
+            //'imagen',
+            //'titulo',
+            //'tiempo',
+            //'comensales',
+            //'dificultad',
+            //'ingredientes:ntext',
+            //'pasos:ntext',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Recetas $model, $key, $index, $column) {

@@ -18,7 +18,7 @@ class ProductoSearch extends Producto
     {
         return [
             [['id'], 'integer'],
-            [['nombre', 'imagen', 'descripcion', 'info_nut', 'tipo'], 'safe'],
+            [['nombre', 'imagen', 'descripcion', 'info_nut', 'tipo', 'color'], 'safe'],
         ];
     }
 
@@ -65,7 +65,8 @@ class ProductoSearch extends Producto
             ->andFilterWhere(['like', 'imagen', $this->imagen])
             ->andFilterWhere(['like', 'descripcion', $this->descripcion])
             ->andFilterWhere(['like', 'info_nut', $this->info_nut])
-            ->andFilterWhere(['like', 'tipo', $this->tipo]);
+            ->andFilterWhere(['like', 'tipo', $this->tipo])
+            ->andFilterWhere(['like', 'color', $this->color]);
 
         return $dataProvider;
     }

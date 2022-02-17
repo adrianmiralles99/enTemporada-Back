@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id_calendario') ?>
+    <?= $form->field($model, 'id') ?>
 
     <?= $form->field($model, 'id_prod') ?>
 

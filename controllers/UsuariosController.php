@@ -22,7 +22,7 @@ class UsuariosController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -39,7 +39,6 @@ class UsuariosController extends Controller
     public function actionIndex($pendiente = "")
     {
         $searchModel = new UsuariosSearch();
-        // $searchModel->tipo = "A";
         $dataProvider = $searchModel->search($this->request->queryParams, $pendiente);
 
         return $this->render('index', [

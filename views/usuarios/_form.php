@@ -32,6 +32,16 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'tipo')->dropDownList([ 'A' => 'A', 'U' => 'U', ], ['prompt' => '']) ?>
 
+    <?= $form->field($model, 'estado')->dropDownList([ 'A' => 'A', 'P' => 'P', 'B' => 'B', ], ['prompt' => '']) ?>
+
+    <?= $form->field($model, 'token')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'fecha_cad')->textInput() ?>
+
+    <?= $form->field($model, 'exp')->textInput() ?>
+
+    <?= $form->field($model, 'id_ultima_receta')->textInput() ?>
+
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

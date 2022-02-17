@@ -13,20 +13,24 @@ use Yii;
  * @property string $nick
  * @property string $correo
  * @property string $password
- * @property string $imagen
- * @property string $descripcion
+ * @property string|null $imagen
+ * @property string|null $descripcion
  * @property string $localidad
  * @property string $direccion
  * @property string $tipo
+ * @property string $estado
+ * @property string|null $token
+ * @property string|null $fecha_cad
+ * @property int|null $exp
+ * @property int|null $id_ultima_receta
  *
  * @property Favoritos[] $favoritos
  * @property Likes[] $likes
  * @property Recetas[] $recetas
+ * @property Recetas[] $recetas0
  */
 class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
-    static $tipoUsuarios = ["U" => "Usuario",  "A" => "Administrdor"];
-
     /**
      * {@inheritdoc}
      */
@@ -41,10 +45,12 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     public function rules()
     {
         return [
-            [['nombre', 'apellidos', 'nick', 'correo', 'password', 'imagen', 'descripcion', 'localidad', 'direccion', 'tipo'], 'required'],
-            [['descripcion', 'tipo'], 'string'],
+            [['nombre', 'apellidos', 'nick', 'correo', 'password', 'localidad', 'direccion', 'tipo', 'estado'], 'required'],
+            [['descripcion', 'tipo', 'estado'], 'string'],
+            [['fecha_cad'], 'safe'],
+            [['exp', 'id_ultima_receta'], 'integer'],
             [['nombre', 'localidad'], 'string', 'max' => 20],
-            [['apellidos', 'imagen'], 'string', 'max' => 40],
+            [['apellidos', 'imagen', 'token'], 'string', 'max' => 40],
             [['nick'], 'string', 'max' => 12],
             [['correo', 'direccion'], 'string', 'max' => 50],
             [['password'], 'string', 'max' => 32],
@@ -54,10 +60,6 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     /**
      * {@inheritdoc}
      */
-    public function getTipoText()
-    {
-        return self::$tipoUsuarios[$this->tipo];
-    }
     public function attributeLabels()
     {
         return [
@@ -72,6 +74,11 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
             'localidad' => 'Localidad',
             'direccion' => 'Direccion',
             'tipo' => 'Tipo',
+            'estado' => 'Estado',
+            'token' => 'Token',
+            'fecha_cad' => 'Fecha Cad',
+            'exp' => 'Exp',
+            'id_ultima_receta' => 'Id Ultima Receta',
         ];
     }
 
@@ -105,6 +112,23 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
         return $this->hasMany(Recetas::class, ['id_usuario' => 'id']);
     }
 
+    /**
+     * Gets query for [[Recetas0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRecetas0()
+    {
+        return $this->hasMany(Recetas::class, ['id_usuario' => 'id']);
+    }
+
+    static $tipoUsuarios = ["U" => "Usuario",  "A" => "Administrdor"];
+
+    public function getTipoText()
+    {
+        return self::$tipoUsuarios[$this->tipo];
+    }
+
     public static function findByUsername($username)
     {
         return static::findOne(['nick' => $username]);
@@ -134,9 +158,6 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     // Comprueba que el password que se le pasa es correcto
     public function validatePassword($password)
     {
-        // var_dump($password);
-        // var_dump(md5($password));
-        // die();
         return $this->password === md5($password); // Si se utiliza otra función de encriptación distinta a md5, habrá que cambiar esta línea
     }
 }

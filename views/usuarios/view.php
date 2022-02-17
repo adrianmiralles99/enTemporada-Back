@@ -40,6 +40,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'localidad',
             'direccion',
             'tipo',
+            'estado',
+            'token',
+            'fecha_cad',
+            'exp',
+            'id_ultima_receta',
         ],
     ]) ?>
 

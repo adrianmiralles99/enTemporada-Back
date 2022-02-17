@@ -29,13 +29,17 @@ AppAsset::register($this);
 
     <header>
         <?php
+        $items = [];
+        $perfil = [];
         if (Yii::$app->user->isGuest) {
-            $items = [
-                ['label' => 'Inicio', 'url' => ['/site/index']],
-                ['label' => 'Login', 'url' => ['/site/login']],
-                ['label' => 'Recetas', 'url' => ['/recetas']],
-
-            ];
+            $perfil[] = '<li>'
+                . Html::beginForm(['/site/login'], 'post', ['class' => 'form-inline'])
+                . Html::submitButton(
+                    'Login',
+                    ['class' => 'btn btn-link log']
+                )
+                . Html::endForm()
+                . '</li>';
         } else {
             $items =
                 [
@@ -43,42 +47,48 @@ AppAsset::register($this);
                         ['label' => 'Petición de registro', 'url' => ['/usuarios', "pendiente" => "P"]],
                         ['label' => 'Productos', 'url' => ['/producto']],
                         ['label' => 'Recetas', 'url' => ['/recetas']],
-                        ['label' => 'Usuarios registrados', 'url' => ['/usuarios',"pendiente" => "A"]],
+                        ['label' => 'Usuarios registrados', 'url' => ['/usuarios', "pendiente" => "A"]],
                     ]]
                 ];
 
 
-            $items[] = '<li>'
+            $perfil[] = '<li>'
                 . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
                 . Html::submitButton(
-                    'Salir (' . Yii::$app->user->identity->nombre . ' - ' . Yii::$app->user->identity->TipoText . ')',
-                    ['class' => 'btn btn-link logout']
+                    'Salir ( ' . Yii::$app->user->identity->nick . " - " . Yii::$app->user->identity->nombre . " " . Yii::$app->user->identity->apellidos . ' )',
+                    ['class' => 'btn btn-link log']
                 )
                 . Html::endForm()
                 . '</li>';
         }
-
+        ?>
+        <?php
 
         NavBar::begin([
-            'brandLabel' => Yii::$app->name,
+
+            'brandLabel' => "<img class='imagen' src='../IMG/tituloW.png' alt=''>" . Yii::$app->name,
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
-                'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
+                'class' => 'navbar navbar-expand-md navbar-dark barra fixed-top',
             ],
         ]);
         echo Nav::widget([
-            'options' => ['class' => 'navbar-nav'],
+            'options' => ['class' => 'navbar-nav ml-5 mr-auto mt-2 mt-lg-0'],
             'items' => $items
+        ]);
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav my-lg-0'],
+            'items' => $perfil
         ]);
         NavBar::end();
         ?>
     </header>
 
-    <main role="main" class="flex-shrink-0">
-        <div class="container">
-            <?= Breadcrumbs::widget([
+    <main role="main" class="">
+        <div class="container mt-5">
+            <!-- <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]) ?>
+            ]) ?> -->
             <?= Alert::widget() ?>
             <?= $content ?>
         </div>
@@ -86,7 +96,6 @@ AppAsset::register($this);
 
     <footer class="footer mt-auto py-3 text-muted">
         <div class="container">
-            <p class="float-left">&copy; My Company <?= date('Y') ?></p>
             <p class="float-right"><?= Yii::powered() ?></p>
         </div>
     </footer>

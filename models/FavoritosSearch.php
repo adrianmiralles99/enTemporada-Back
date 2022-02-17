@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Calendario;
+use app\models\Favoritos;
 
 /**
- * CalendarioSearch represents the model behind the search form of `app\models\Calendario`.
+ * FavoritosSearch represents the model behind the search form of `app\models\Favoritos`.
  */
-class CalendarioSearch extends Calendario
+class FavoritosSearch extends Favoritos
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,7 @@ class CalendarioSearch extends Calendario
     public function rules()
     {
         return [
-            [['id', 'id_prod', 'mes'], 'integer'],
-            [['estado'], 'safe'],
+            [['id', 'id_usuario', 'id_receta'], 'integer'],
         ];
     }
 
@@ -40,7 +39,7 @@ class CalendarioSearch extends Calendario
      */
     public function search($params)
     {
-        $query = Calendario::find();
+        $query = Favoritos::find();
 
         // add conditions that should always apply here
 
@@ -59,11 +58,9 @@ class CalendarioSearch extends Calendario
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'id_prod' => $this->id_prod,
-            'mes' => $this->mes,
+            'id_usuario' => $this->id_usuario,
+            'id_receta' => $this->id_receta,
         ]);
-
-        $query->andFilterWhere(['like', 'estado', $this->estado]);
 
         return $dataProvider;
     }
