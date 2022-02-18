@@ -13,10 +13,20 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin();
     ?>
     <div class="row">
-        <div class="col-3">
-            <?= $form->field($model, 'id_usuario')->textInput() ?>
+        <div class="col-6">
+            <?= $form->field($model, 'titulo')->textInput() ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'imagen')->textInput() ?>
         </div>
 
+        <div class="col-3">
+            <?= $form->field($model, 'id_usuario')->textInput()->label("Id del Usuario") ?>
+        </div>
+
+        <div class="col-3">
+            <?= $form->field($model, 'id_prodp')->textInput()->label("Id del Producto Principal") ?>
+        </div>
         <div class="col-3">
             <?= $form->field($model, 'tipo')->dropDownList(
                 ['Desayuno' => 'Desayuno', 'Almuerzo' => 'Almuerzo', 'Comida' => 'Comida', 'Cena' => 'Cena', 'Postre' => 'Postre'],
@@ -28,9 +38,6 @@ use yii\widgets\ActiveForm;
 
         </div>
 
-        <div class="col-3">
-            <?= $form->field($model, 'id_prodp')->textInput() ?>
-        </div>
 
         <div class="col-12">
             <?= $form->field($model, 'ingredientes')->textarea(["rows" => 5]) ?>
@@ -40,11 +47,11 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'pasos')->textarea(["rows" => 5]) ?>
         </div>
 
-    </div>
 
 
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'save btn btn-success']) ?>
+        <div class="form-group col-12">
+            <?= Html::submitButton('Save', ['class' => 'save btn btn-success']) ?>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

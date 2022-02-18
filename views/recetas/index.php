@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+            'titulo',
             [
                 'attribute' => 'id_usuario',
                 'label' => 'Usuario',
@@ -53,7 +54,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             //'estado',
             //'imagen',
-            //'titulo',
             //'tiempo',
             //'comensales',
             //'dificultad',
