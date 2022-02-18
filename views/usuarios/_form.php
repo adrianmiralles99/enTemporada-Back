@@ -11,39 +11,47 @@ use yii\widgets\ActiveForm;
 <div class="usuarios-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <div class="row">
+        <div class="col-3">
+            <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-3">
+            <?= $form->field($model, 'apellidos')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-3">
+            <?= $form->field($model, 'nick')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-3">
+            <?= $form->field($model, 'imagen')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-12">
+            <?= $form->field($model, 'correo')->textInput(['maxlength' => true]) ?>
+        </div>
 
-    <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
+        <div class="col-3">
+            <?= $form->field($model, 'localidad')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-3">
+            <?= $form->field($model, 'direccion')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-2">
+            <?= $form->field($model, 'tipo')->dropDownList(['A' => 'Administrador', 'U' => 'Usuario',], ['prompt' => '']) ?>
+        </div>
+        <div class="col-2">
+            <?= $form->field($model, 'estado')->dropDownList(['A' => 'Activo', 'P' => 'Pendiente', 'B' => 'Bloqueado',], ['prompt' => '']) ?>
+        </div>
+        <div class="col-3">
+            <?= $form->field($model, 'exp')->textInput()->label("Experiencia") ?>
+        </div>
 
-    <?= $form->field($model, 'apellidos')->textInput(['maxlength' => true]) ?>
+        <div class="col-12">
+            <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
+        </div>
 
-    <?= $form->field($model, 'nick')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'correo')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'imagen')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'localidad')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'direccion')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'tipo')->dropDownList([ 'A' => 'A', 'U' => 'U', ], ['prompt' => '']) ?>
-
-    <?= $form->field($model, 'estado')->dropDownList([ 'A' => 'A', 'P' => 'P', 'B' => 'B', ], ['prompt' => '']) ?>
-
-    <?= $form->field($model, 'token')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'fecha_cad')->textInput() ?>
-
-    <?= $form->field($model, 'exp')->textInput() ?>
-
-    <?= $form->field($model, 'id_ultima_receta')->textInput() ?>
-
+    </div>
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Save', ['class' => 'save btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

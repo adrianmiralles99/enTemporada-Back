@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Producto', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Nuevo Articulo', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -33,8 +33,26 @@ $this->params['breadcrumbs'][] = $this->title;
             'nombre',
             'imagen',
             'descripcion:ntext',
-            'info_nut:ntext',
-            'tipoArticulo',
+            [
+                'attribute' => 'info_nut',
+                'label' => 'Información de Nutrientes',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    $ret = '<table>';
+                    foreach ($data->info_nut as $dato => $valor) {
+                        $ret .= "<tr><th>" . (new Producto())->getNutriente($dato) . "</th><td>$valor</td></tr>";
+                    }
+                    $ret .= '</table>';
+
+                    return $ret;
+                }
+            ],
+            [
+                'attribute' => 'tipo',
+                'label' => 'Tipo de Articulo',
+                'format' => 'raw',
+                'value' => "tipoArticulo"
+            ],
             //'color',
             [
                 'class' => ActionColumn::class,

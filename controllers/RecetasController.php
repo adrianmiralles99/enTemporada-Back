@@ -36,10 +36,10 @@ class RecetasController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($pendiente)
     {
         $searchModel = new RecetasSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = $searchModel->search($this->request->queryParams, $pendiente);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

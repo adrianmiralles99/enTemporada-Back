@@ -13,6 +13,7 @@ use Yii;
  * @property string $descripcion
  * @property string $info_nut
  * @property string $tipo
+ * @property string $color
  *
  * @property Calendario[] $calendarios
  * @property Recetas[] $recetas
@@ -33,10 +34,12 @@ class Producto extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'imagen', 'descripcion', 'info_nut', 'tipo'], 'required'],
-            [['descripcion', 'info_nut', 'tipo'], 'string'],
+            [['nombre', 'imagen', 'descripcion', 'info_nut', 'tipo', 'color'], 'required'],
+            [['info_nut'], 'safe'],
+            [['descripcion', 'tipo'], 'string'],
             [['nombre'], 'string', 'max' => 20],
             [['imagen'], 'string', 'max' => 100],
+            [['color'], 'string', 'max' => 40],
         ];
     }
 
@@ -52,6 +55,7 @@ class Producto extends \yii\db\ActiveRecord
             'descripcion' => 'Descripcion',
             'info_nut' => 'Info Nut',
             'tipo' => 'Tipo',
+            'color' => 'Color',
         ];
     }
 
@@ -75,17 +79,24 @@ class Producto extends \yii\db\ActiveRecord
         return $this->hasMany(Recetas::class, ['id_prodp' => 'id']);
     }
 
-    // public function afterFind()
-    // {
-    //     $this->info_nut = json_decode($this->info_nut, true);
-    //     return parent::afterFind();
-    // }
-    
-    static $articulo = ["V" => "Verdura",  "F" => "Fruta"];
-
-    public function getTipoArticulo(){
-        return self::$articulo[$this->tipo];
+    public function afterFind()
+    {
+        $this->info_nut = json_decode($this->info_nut, true);
+        return parent::afterFind();
     }
 
-    
+    static $nutrientes = [
+        "e" => "Energia",  "pr" => "Proteinas", "g" => "Grasa",  "hc" => "H. carbono", "cl" => "Calcio",
+        "fb" => "Fibra", "s" => "Sodio",  "pt" => "Potasio", "h" => "Hierro",  "af" => "Ac. folico"
+    ];
+    static $articulo = ["V" => "Verdura",  "F" => "Fruta"];
+
+    public function getTipoArticulo()
+    {
+        return self::$articulo[$this->tipo];
+    }
+    public function getNutriente($e)
+    {
+        return self::$nutrientes[$e];
+    }
 }

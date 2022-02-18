@@ -38,7 +38,7 @@ class RecetasSearch extends Recetas
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $pendiente)
     {
         $query = Recetas::find();
 
@@ -73,6 +73,10 @@ class RecetasSearch extends Recetas
             ->andFilterWhere(['like', 'dificultad', $this->dificultad])
             ->andFilterWhere(['like', 'ingredientes', $this->ingredientes])
             ->andFilterWhere(['like', 'pasos', $this->pasos]);
+
+        if ($pendiente) {
+            $query->andWhere("estado='$pendiente'");
+        }
 
         return $dataProvider;
     }

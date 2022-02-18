@@ -43,12 +43,12 @@ AppAsset::register($this);
         } else {
             $items =
                 [
-                    ['label' => 'Administrador', 'items' => [
-                        ['label' => 'Petición de registro', 'url' => ['/usuarios', "pendiente" => "P"]],
-                        ['label' => 'Productos', 'url' => ['/producto']],
-                        ['label' => 'Recetas', 'url' => ['/recetas']],
-                        ['label' => 'Usuarios registrados', 'url' => ['/usuarios', "pendiente" => "A"]],
-                    ]]
+                    ['label' => 'Petición de registro', 'url' => ['/usuarios', "pendiente" => "P"]],
+                    ['label' => 'Productos', 'url' => ['/producto']],
+                    ['label' => 'Usuarios registrados', 'url' => ['/usuarios', "pendiente" => "A"]],
+                    ['label' => 'Recetas', 'url' => ['/recetas', "pendiente" => "A"]],
+                    ['label' => 'Recetas pendientes', 'url' => ['/recetas', "pendiente" => "P"]],
+
                 ];
 
 
@@ -85,10 +85,10 @@ AppAsset::register($this);
     </header>
 
     <main role="main" class="">
-        <div class="container mt-5">
+        <div class="container vista mt-5">
             <!-- <?= Breadcrumbs::widget([
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]) ?> -->
+                        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                    ]) ?> -->
             <?= Alert::widget() ?>
             <?= $content ?>
         </div>

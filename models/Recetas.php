@@ -10,14 +10,22 @@ use Yii;
  * @property int $id
  * @property int $id_usuario
  * @property string $tipo
- * @property string $datos
  * @property string $fecha
  * @property int $id_prodp
+ * @property string $estado
+ * @property string $imagen
+ * @property string $titulo
+ * @property string $tiempo
+ * @property int $comensales
+ * @property string $dificultad
+ * @property string $ingredientes
+ * @property string $pasos
  *
  * @property Favoritos[] $favoritos
  * @property Likes[] $likes
  * @property Producto $prodp
  * @property Usuarios $usuario
+ * @property Usuarios $usuario0
  */
 class Recetas extends \yii\db\ActiveRecord
 {
@@ -35,13 +43,17 @@ class Recetas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_usuario', 'tipo', 'datos', 'id_prodp'], 'required'],
-            [['id_usuario', 'id_prodp'], 'integer'],
-            [['datos'], 'string'],
+            [['id_usuario', 'tipo', 'id_prodp', 'estado', 'imagen', 'titulo', 'tiempo', 'comensales', 'dificultad', 'ingredientes', 'pasos'], 'required'],
+            [['id_usuario', 'id_prodp', 'comensales'], 'integer'],
             [['fecha'], 'safe'],
-            [['tipo'], 'string', 'max' => 20],
-            [['id_prodp'], 'exist', 'skipOnError' => true, 'targetClass' => Producto::className(), 'targetAttribute' => ['id_prodp' => 'id']],
-            [['id_usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['id_usuario' => 'id']],
+            [['estado', 'ingredientes', 'pasos'], 'string'],
+            [['tipo', 'dificultad'], 'string', 'max' => 20],
+            [['imagen'], 'string', 'max' => 40],
+            [['titulo'], 'string', 'max' => 30],
+            [['tiempo'], 'string', 'max' => 10],
+            [['id_prodp'], 'exist', 'skipOnError' => true, 'targetClass' => Producto::class, 'targetAttribute' => ['id_prodp' => 'id']],
+            [['id_usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['id_usuario' => 'id']],
+            [['id_usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['id_usuario' => 'id']],
         ];
     }
 
@@ -54,9 +66,16 @@ class Recetas extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_usuario' => 'Id Usuario',
             'tipo' => 'Tipo',
-            'datos' => 'Datos',
             'fecha' => 'Fecha',
             'id_prodp' => 'Id Prodp',
+            'estado' => 'Estado',
+            'imagen' => 'Imagen',
+            'titulo' => 'Titulo',
+            'tiempo' => 'Tiempo',
+            'comensales' => 'Comensales',
+            'dificultad' => 'Dificultad',
+            'ingredientes' => 'Ingredientes',
+            'pasos' => 'Pasos',
         ];
     }
 
@@ -67,7 +86,7 @@ class Recetas extends \yii\db\ActiveRecord
      */
     public function getFavoritos()
     {
-        return $this->hasMany(Favoritos::className(), ['ud_receta' => 'id']);
+        return $this->hasMany(Favoritos::class, ['id_receta' => 'id']);
     }
 
     /**
@@ -77,7 +96,7 @@ class Recetas extends \yii\db\ActiveRecord
      */
     public function getLikes()
     {
-        return $this->hasMany(Likes::className(), ['id_receta' => 'id']);
+        return $this->hasMany(Likes::class, ['id_receta' => 'id']);
     }
 
     /**
@@ -87,7 +106,7 @@ class Recetas extends \yii\db\ActiveRecord
      */
     public function getProdp()
     {
-        return $this->hasOne(Producto::className(), ['id' => 'id_prodp']);
+        return $this->hasOne(Producto::class, ['id' => 'id_prodp']);
     }
 
     /**
@@ -97,6 +116,14 @@ class Recetas extends \yii\db\ActiveRecord
      */
     public function getUsuario()
     {
-        return $this->hasOne(Usuarios::className(), ['id' => 'id_usuario']);
+        return $this->hasOne(Usuarios::class, ['id' => 'id_usuario']);
+    }
+
+    public function afterFind()
+    {
+        // $this->pasos = json_decode($this->pasos, true);
+        // $this->ingredientes = json_decode($this->ingredientes, true);
+        
+        return parent::afterFind();
     }
 }

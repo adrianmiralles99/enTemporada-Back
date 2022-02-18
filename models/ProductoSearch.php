@@ -43,7 +43,6 @@ class ProductoSearch extends Producto
         $query = Producto::find();
 
         // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -61,12 +60,18 @@ class ProductoSearch extends Producto
             'id' => $this->id,
         ]);
 
+        if ($this->tipo == "Verdura") {
+            $this->tipo = "V";
+        } else if ($this->tipo == "Fruta") {
+            $this->tipo = "F";
+        }
+
         $query->andFilterWhere(['like', 'nombre', $this->nombre])
             ->andFilterWhere(['like', 'imagen', $this->imagen])
             ->andFilterWhere(['like', 'descripcion', $this->descripcion])
             ->andFilterWhere(['like', 'info_nut', $this->info_nut])
-            ->andFilterWhere(['like', 'tipo', $this->tipo])
-            ->andFilterWhere(['like', 'color', $this->color]);
+            ->andFilterWhere(['like', 'color', $this->color])
+            ->andFilterWhere(['like', 'tipo', $this->tipo]);
 
         return $dataProvider;
     }

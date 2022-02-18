@@ -1,9 +1,11 @@
 <?php
 
+use app\models\Producto;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\Recetas;
+use app\models\Usuarios;
 use yii\grid\ActionColumn;
 
 /* @var $this yii\web\View */
@@ -12,6 +14,7 @@ use yii\grid\ActionColumn;
 
 $this->title = 'Recetas';
 $this->params['breadcrumbs'][] = $this->title;
+// $modeloProducto = (new Usuarios())->findOne($searchModel->id_usuario);
 ?>
 <div class="recetas-index">
 
@@ -21,19 +24,33 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Recetas', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    echo $searchModel->id_usuario;
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'id_usuario',
+            [
+                'attribute' => 'id_usuario',
+                'label' => 'Usuario',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    return "ID: " . $data->id_usuario . " <br>Nick:  " . (new Usuarios())->findOne($data->id_usuario)->nick;
+                }
+            ],
             'tipo',
             'fecha',
-            'id_prodp',
+            [
+                'attribute' => 'id_usuario',
+                'label' => 'Producto Principal',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    return "ID: " . $data->id_prodp . " <br>Nombre: " . (new Producto())->findOne($data->id_prodp)->nombre;
+                }
+            ],
             //'estado',
             //'imagen',
             //'titulo',
@@ -46,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Recetas $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                }
             ],
         ],
     ]); ?>

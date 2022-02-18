@@ -10,22 +10,41 @@ use yii\widgets\ActiveForm;
 
 <div class="producto-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin();
+    $model->info_nut = json_encode($model->info_nut);
+    ?>
+    <div class="row">
+        <div class="col-3">
+            <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
+        </div>
 
-    <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
+        <div class="col-3">
+            <?= $form->field($model, 'imagen')->textInput(['maxlength' => true]) ?>
+        </div>
 
-    <?= $form->field($model, 'imagen')->textInput(['maxlength' => true]) ?>
+        <div class="col-3">
+            <?= $form->field($model, 'tipo')->dropDownList(['F' => 'Fruta', 'V' => 'Verdura',], ['prompt' => '']) ?>
+        </div>
 
-    <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
+        <div class="col-3">
+            <?= $form->field($model, 'color')->textInput(['maxlength' => true])->label("<div style='background-color:" . $model->color . "' class='color'></div>Color") ?>
+        </div>
 
-    <?= $form->field($model, 'info_nut')->textarea(['rows' => 6]) ?>
+        <div class="col-12">
+            <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
+        </div>
 
-    <?= $form->field($model, 'tipo')->dropDownList([ 'F' => 'F', 'V' => 'V', ], ['prompt' => '']) ?>
+        <div class="col-12">
+            <?= $form->field($model, 'info_nut')->textarea(['rows' => 6]) ?>
+        </div>
 
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+
+
+        <div class="form-group col-12">
+            <?= Html::submitButton('Save', ['class' => 'save btn btn-success']) ?>
+        </div>
+
     </div>
-
     <?php ActiveForm::end(); ?>
 
 </div>

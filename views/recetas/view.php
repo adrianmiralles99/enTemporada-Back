@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Recetas */
 
-$this->title = $model->id;
+$this->title = $model->titulo;
 $this->params['breadcrumbs'][] = ['label' => 'Recetas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="recetas-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <br>
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
@@ -33,8 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_usuario',
             'tipo',
             'fecha',
-            'id_prodp',
-            'estado',
+            // 'id_prodp',
+            // 'estado',
             'imagen',
             'titulo',
             'tiempo',

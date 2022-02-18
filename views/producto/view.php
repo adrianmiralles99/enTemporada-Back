@@ -2,11 +2,12 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\models\Producto;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Producto */
 
-$this->title = $model->id;
+$this->title = $model->nombre;
 $this->params['breadcrumbs'][] = ['label' => 'Productos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -33,9 +34,27 @@ $this->params['breadcrumbs'][] = $this->title;
             'nombre',
             'imagen',
             'descripcion:ntext',
-            'info_nut:ntext',
+            [
+                'attribute' => 'info_nut',
+                'label' => 'Información de Nutrientes',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    $ret = '<table>';
+                    foreach ($data->info_nut as $dato => $valor) {
+                        $ret .= "<tr><th>" . (new Producto())->getNutriente($dato) . "</th><td>$valor</td></tr>";
+                    }
+                    $ret .= '</table>';
+
+                    return $ret;
+                }
+            ],
             'tipo',
-            'color',
+            [
+                'attribute' => 'color',
+                'label' => "<div style='background-color:" . $model->color . "' class='color'></div>Color",
+                'format' => 'raw',
+                'value' => $model->color
+            ],
         ],
     ]) ?>
 
