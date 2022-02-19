@@ -76,6 +76,7 @@ class UsuariosSearch extends Usuarios
             ->andFilterWhere(['like', 'tipo', $this->tipo])
             ->andFilterWhere(['like', 'estado', $this->estado])
             ->andFilterWhere(['like', 'token', $this->token]);
+            
         if ($pendiente) {
             $query->andWhere("estado='$pendiente'");
         }

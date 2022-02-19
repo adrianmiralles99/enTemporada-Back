@@ -77,7 +77,6 @@ class RecetasSearch extends Recetas
         if ($pendiente) {
             $query->andWhere("estado='$pendiente'");
         }
-
         return $dataProvider;
     }
 }

@@ -84,6 +84,11 @@ class Producto extends \yii\db\ActiveRecord
         $this->info_nut = json_decode($this->info_nut, true);
         return parent::afterFind();
     }
+    public function beforeSave($insert)
+    {
+        $this->info_nut = json_encode($this->info_nut); //Los convertimos a Json
+        return parent::beforeSave($insert);
+    }
 
     static $nutrientes = [
         "e" => "Energia",  "pr" => "Proteinas", "g" => "Grasa",  "hc" => "H. carbono", "cl" => "Calcio",

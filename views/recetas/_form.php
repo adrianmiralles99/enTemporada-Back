@@ -34,18 +34,43 @@ use yii\widgets\ActiveForm;
             ) ?>
         </div>
         <div class="col-3">
-            <?= $form->field($model, 'dificultad')->dropDownList(['Fácil' => 'Fácil', 'Intermedio' => 'Intermedio', 'Difícil' => 'Difícil'], ['prompt' => '']) ?>
+            <?= $form->field($model, 'dificultad')->dropDownList(['Fácil' => 'Fácil', 'Intermedia' => 'Intermedia', 'Difícil' => 'Difícil'], ['prompt' => '']) ?>
 
         </div>
 
-
-        <div class="col-12">
-            <?= $form->field($model, 'ingredientes')->textarea(["rows" => 5]) ?>
+        <div class="col-12 row">
+            <?php
+            echo "<p>Ingredientes</p>";
+            if ($model->ingredientes) {
+                foreach ($model->ingredientes as $id => $valor) {
+                    echo "<input class='form-control' name='Producto[ingredientes][$id]' value='$valor'></label>";
+                }
+            } else {
+                // foreach ($model::$nutrientes as $nut => $valor) {
+                //     echo "<label class='col-2'><span>" . $model->getNutriente($nut) . "</span><br>";
+                //     echo "<input class='form-control' name='Producto[info_nut][$nut]' ></label>";
+                // }
+            }
+            ?>
         </div>
 
-        <div class="col-12">
-            <?= $form->field($model, 'pasos')->textarea(["rows" => 5]) ?>
+        <div class="col-12 row">
+            <?php
+            echo "<p><br>Pasos</p>";
+            if ($model->ingredientes) {
+                foreach ($model->pasos as $id => $valor) {
+                    echo "<input class='form-control' name='Producto[pasos][$id]' value='$valor'></label>";
+                }
+            } else {
+                // foreach ($model::$nutrientes as $nut => $valor) {
+                //     echo "<label class='col-2'><span>" . $model->getNutriente($nut) . "</span><br>";
+                //     echo "<input class='form-control' name='Producto[info_nut][$nut]' ></label>";
+                // }
+            }
+            ?>
         </div>
+
+
 
 
 

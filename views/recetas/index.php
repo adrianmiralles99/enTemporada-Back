@@ -1,11 +1,9 @@
 <?php
 
-use app\models\Producto;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\Recetas;
-use app\models\Usuarios;
 use yii\grid\ActionColumn;
 
 /* @var $this yii\web\View */
@@ -14,18 +12,16 @@ use yii\grid\ActionColumn;
 
 $this->title = 'Recetas';
 $this->params['breadcrumbs'][] = $this->title;
-// $modeloProducto = (new Usuarios())->findOne($searchModel->id_usuario);
 ?>
 <div class="recetas-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="titulo"><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a('Create Recetas', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); 
-    echo $searchModel->id_usuario;
     ?>
 
     <?= GridView::widget([
@@ -33,23 +29,25 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+
+            // 'id',
             'titulo',
             [
                 'attribute' => 'id_usuario',
                 'label' => 'Usuario',
                 'format' => 'raw',
                 'value' => function ($data) {
-                    return "ID: " . $data->id_usuario . " <br>Nick:  " . (new Usuarios())->findOne($data->id_usuario)->nick;
+                    return "ID: " . $data->usuario->id . "<br>Nombre: " . $data->usuario->nombre;
                 }
             ],
             'tipo',
             'fecha',
             [
-                'attribute' => 'id_usuario',
+                'attribute' => 'id_prodp',
                 'label' => 'Producto Principal',
                 'format' => 'raw',
                 'value' => function ($data) {
-                    return "ID: " . $data->id_prodp . " <br>Nombre: " . (new Producto())->findOne($data->id_prodp)->nombre;
+                    return "ID: " . $data->prodp->id . "<br>Nombre: " . $data->prodp->nombre;
                 }
             ],
             //'estado',

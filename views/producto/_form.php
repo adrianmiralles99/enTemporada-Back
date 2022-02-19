@@ -11,7 +11,6 @@ use yii\widgets\ActiveForm;
 <div class="producto-form">
 
     <?php $form = ActiveForm::begin();
-    $model->info_nut = json_encode($model->info_nut);
     ?>
     <div class="row">
         <div class="col-3">
@@ -34,10 +33,22 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
         </div>
 
-        <div class="col-12">
-            <?= $form->field($model, 'info_nut')->textarea(['rows' => 6]) ?>
+        <!-- name="Producto[info_nut][cl]" -->
+        <div class="col-12 row">
+            <?php
+            if ($model->info_nut) {
+                foreach ($model->info_nut as $nut => $valor) {
+                    echo "<label class='col-2'><span>" . $model->getNutriente($nut) . "</span><br>";
+                    echo "<input class='form-control' name='Producto[info_nut][$nut]' value='$valor'></label>";
+                }
+            } else {
+                foreach ($model::$nutrientes as $nut => $valor) {
+                    echo "<label class='col-2'><span>" . $model->getNutriente($nut) . "</span><br>";
+                    echo "<input class='form-control' name='Producto[info_nut][$nut]' ></label>";
+                }
+            }
+            ?>
         </div>
-
 
 
         <div class="form-group col-12">

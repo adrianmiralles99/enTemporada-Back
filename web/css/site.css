@@ -180,6 +180,7 @@ main > .container {
     padding-left: 70px;
     padding-right: 70px;
     margin: auto;
+    margin-top: 20px;
 }
 
 /* INICIO */
@@ -189,9 +190,19 @@ main > .container {
 
 .home .imagenes img {
     width: 90%;
-    margin: auto;
+    border-radius: 5px;
+    box-shadow:  0 5px 10px rgba(0, 0, 0, 0.299);
+}
+.home .imagenes {
+    text-align: center;
 }
 
-.home .imagenes h2,h3{
+.home .imagenes h2,
+h3 {
     font-family: recoletaB;
+}
+
+.titulo{
+    font-family: recoletaB;
+    margin-bottom: 20px;
 }

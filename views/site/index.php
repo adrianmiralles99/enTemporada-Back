@@ -3,7 +3,7 @@
     if (Yii::$app->user->isGuest) {
         echo "<h1>Bienvenido a <em>EnTemporada</em>, donde apoyamos</h1>";
     } else {
-        echo "<h1>Bienvenido" . Yii::$app->user->identity->nick . "</h1>";
+        echo "<h1>Bienvenido, " . Yii::$app->user->identity->nick . "</h1>";
     }
     ?>
     <br>
