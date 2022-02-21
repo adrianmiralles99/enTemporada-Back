@@ -5,6 +5,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\Producto;
 use yii\grid\ActionColumn;
+use yii\grid\CheckboxColumn;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ProductoSearch */
@@ -28,8 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
+            //['class' => 'yii\grid\SerialColumn'],
+            [
+                'class' => CheckboxColumn::class, 'name' => 'idselec',
+                'checkboxOptions' => function ($model, $key, $index, $column) {
+                    return ['value' => $model->id];
+                }
+            ],
             // 'id',
             'nombre',
             // 'imagen',
@@ -55,12 +61,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => "tipoArticulo"
             ],
             //'color',
-            [
+            /*[
                 'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Producto $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                 }
-            ],
+            ],*/
+            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 

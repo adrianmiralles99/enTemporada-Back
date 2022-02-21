@@ -15,7 +15,7 @@
                     <h3>A nuestra comunidad</h3>
                 </div>
                 <div class="col-12">
-                    <img src="../IMG/Escenas/comunidad.png" alt="">
+                    <img src="../IMG/Escenas/Comunidad.png" alt="">
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
                     <h3>La conservación planeta</h3>
                 </div>
                 <div class="col-12">
-                    <img src="../IMG/Escenas/planeta.png" alt="">
+                    <img src="../IMG/Escenas/Planeta.png" alt="">
                 </div>
             </div>
         </div>
