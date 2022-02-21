@@ -48,7 +48,6 @@ AppAsset::register($this);
                     ['label' => 'Usuarios registrados', 'url' => ['/usuarios', "pendiente" => "A"]],
                     ['label' => 'Recetas', 'url' => ['/recetas', "pendiente" => "A"]],
                     ['label' => 'Recetas pendientes', 'url' => ['/recetas', "pendiente" => "P"]],
-
                 ];
 
 

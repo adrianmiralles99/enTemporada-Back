@@ -38,7 +38,7 @@ class RecetasSearch extends Recetas
      *
      * @return ActiveDataProvider
      */
-    public function search($params, $pendiente)
+    public function search($params, $pendiente = null)
     {
         $query = Recetas::find();
 

@@ -43,10 +43,10 @@ class Recetas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_usuario', 'tipo', 'id_prodp', 'estado', 'imagen', 'titulo', 'tiempo', 'comensales', 'dificultad', 'ingredientes', 'pasos'], 'required'],
+            [['id_usuario',  'id_prodp', 'imagen', 'titulo', 'tipo', 'tiempo', 'comensales', 'dificultad', 'ingredientes', 'pasos'], 'required'],
             [['id_usuario', 'id_prodp', 'comensales'], 'integer'],
-            [['fecha'], 'safe'],
-            [['estado', 'ingredientes', 'pasos'], 'string'],
+            [['fecha', 'ingredientes', 'pasos'], 'safe'],
+            [['estado'], 'string'],
             [['tipo', 'dificultad'], 'string', 'max' => 20],
             [['imagen'], 'string', 'max' => 40],
             [['titulo'], 'string', 'max' => 30],
@@ -127,8 +127,14 @@ class Recetas extends \yii\db\ActiveRecord
     }
     public function beforeSave($insert)
     {
+        // var_dump($this->pasos);
+        // echo "<br>";
+        // echo "<br>";
+        // echo "<br>";
+        $this->estado = "A";
         $this->pasos = json_encode($this->pasos); //Los convertimos a Json
         $this->ingredientes = json_encode($this->ingredientes); //Los convertimos a Json
+        // die();
         return parent::beforeSave($insert);
     }
 }

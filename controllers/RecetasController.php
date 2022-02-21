@@ -22,7 +22,7 @@ class RecetasController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -36,7 +36,7 @@ class RecetasController extends Controller
      *
      * @return string
      */
-    public function actionIndex($pendiente)
+    public function actionIndex($pendiente=null)
     {
         $searchModel = new RecetasSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, $pendiente);
@@ -129,6 +129,6 @@ class RecetasController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('La actual receta no existe');
     }
 }
