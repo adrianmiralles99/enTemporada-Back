@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use Yii;
 use yii\web\Controller;
 use app\models\Usuarios;
 use yii\web\UploadedFile;
@@ -25,7 +26,7 @@ class UsuariosController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -71,13 +72,15 @@ class UsuariosController extends Controller
     public function actionCreate()
     {
         $model = new Usuarios();
-        $upload = new UploadForm();
+        // $upload = new UploadForm();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->imagen = UploadedFile::getInstance($model, 'imagen');
-                if ($upload->upload())
-                    return $this->render('upload', ['model' => $upload]);
+                // $model->imagen = UploadedFile::getInstance($model, 'imagen');
+                // if ($upload->upload()) {
+                //     var_dump("hola");
+                //     die();
+                // }
                 if ($model->save())
                     return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -101,9 +104,34 @@ class UsuariosController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+
+            $fileUpload = UploadedFile::getInstance($model, 'eventImage');
+            if (!empty($fileUpload)) {
+                // $lastImagen = $model->imagen;
+                // GUARDAMOS EL NOMBRE DE LA IMAGEN
+                $model->imagen = $model->imagen = "IMGa_" . $model->id . "." . $fileUpload->extension;
+
+                // SI SE GUARDA CORRECTAMENTE EL MODELO
+                if ($model->save()) {
+                    $path = Yii::$app->getBasePath(false) . '\..\upload\\';
+                    if (!is_dir($path)) {
+                        mkdir($path, 0777, true);
+                    }
+
+                    // SUBIMOS LA IMAGEN
+                    $fileUpload->saveAs($path . $model->imagen);
+                    // LA LINEA DE ABAJO SIRVE PARA BORRAR EN CASO DE TENER NOMBRES DIFERENTES
+                    // unlink(Yii::$app->getBasePath(false) . '\IMG\\' . $lastImagen);
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } else {
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
         }
+
 
         return $this->render('update', [
             'model' => $model,

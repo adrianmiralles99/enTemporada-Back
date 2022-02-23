@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "usuarios".
@@ -31,6 +32,8 @@ use Yii;
  */
 class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+
+    public $eventImage;
     /**
      * {@inheritdoc}
      */
@@ -54,6 +57,7 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
             [['nick'], 'string', 'max' => 12],
             [['correo', 'direccion'], 'string', 'max' => 50],
             [['password'], 'string', 'max' => 32],
+            [['eventImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -156,12 +160,6 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     }
     public function beforeSave($insert)
     {
-        // var_dump($this->pasos);
-        // echo "<br>";
-        // echo "<br>";
-        // echo "<br>";
-
-        // die();
         return parent::beforeSave($insert);
     }
 

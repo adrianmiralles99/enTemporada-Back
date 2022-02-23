@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 
 <div class="usuarios-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
     <div class="row">
         <div class="col-3">
             <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
@@ -22,7 +22,9 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'nick')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-3">
-            <input type="file" id="usuarios-imagen" name="Usuarios[imagen]">
+            <!-- <input type="file" id="usuarios-imagen" name="Usuarios[imagen]"> -->
+            <?= $form->field($model, 'eventImage')->fileInput() ?>
+            <!-- <input type="file" id="usuarios-imagen" name="Usuarios[eventImage]"> -->
         </div>
         <div class="col-12">
             <?= $form->field($model, 'correo')->textInput(['maxlength' => true]) ?>
