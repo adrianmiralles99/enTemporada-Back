@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return ['value' => $model->id];
                 }
             ],
-            // 'id',
+            'id',
             'titulo',
             [
                 'attribute' => 'id_usuario',

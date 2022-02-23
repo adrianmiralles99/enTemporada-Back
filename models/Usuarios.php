@@ -47,10 +47,10 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
         return [
             [['nombre', 'apellidos', 'nick', 'correo', 'password', 'localidad', 'direccion', 'tipo', 'estado'], 'required'],
             [['descripcion', 'tipo', 'estado'], 'string'],
-            [['fecha_cad'], 'safe'],
+            [['fecha_cad', 'imagen'], 'safe'],
             [['exp', 'id_ultima_receta'], 'integer'],
             [['nombre', 'localidad'], 'string', 'max' => 20],
-            [['apellidos', 'imagen', 'token'], 'string', 'max' => 40],
+            [['apellidos', 'token'], 'string', 'max' => 40],
             [['nick'], 'string', 'max' => 12],
             [['correo', 'direccion'], 'string', 'max' => 50],
             [['password'], 'string', 'max' => 32],
@@ -153,6 +153,16 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     }
     public static function findIdentityByAccessToken($token, $type = null)
     {
+    }
+    public function beforeSave($insert)
+    {
+        // var_dump($this->pasos);
+        // echo "<br>";
+        // echo "<br>";
+        // echo "<br>";
+
+        // die();
+        return parent::beforeSave($insert);
     }
 
     // Comprueba que el password que se le pasa es correcto
