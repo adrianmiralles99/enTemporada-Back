@@ -5,6 +5,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\Recetas;
 use yii\grid\ActionColumn;
+use yii\grid\CheckboxColumn;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RecetasSearch */
@@ -28,8 +29,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
+            [
+                'class' => CheckboxColumn::class, 'name' => 'idselec',
+                'checkboxOptions' => function ($model, $key, $index, $column) {
+                    return ['value' => $model->id];
+                }
+            ],
             // 'id',
             'titulo',
             [
