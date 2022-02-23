@@ -23,6 +23,9 @@ class FileController
 {
     public function actionUpload($x)
     {
+        $archivo = $_FILES['archivo']['name'];
+        $temp = $_FILES['archivo']['tmp_name'];
+
         // $archivo = $_FILES['name'];
         var_dump($x);
         die();

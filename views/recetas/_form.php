@@ -59,7 +59,7 @@ use yii\widgets\ActiveForm;
         <div class="col-4">
             <?= $form->field($model, 'titulo')->textInput() ?>
         </div>
-        <div class="col-3">
+        <div class="col-2">
             <?= $form->field($model, 'imagen')->textInput() ?>
         </div>
 
@@ -67,11 +67,16 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'id_usuario')->textInput()->label("Id del Usuario") ?>
         </div>
 
-        <div class="col-3">
+        <div class="col-2">
             <?= $form->field($model, 'id_prodp')->textInput()->label("Id del Producto Principal") ?>
         </div>
 
-        
+        <div class="col-2">
+            <?= $form->field($model, 'estado')->dropDownList(
+                ['P' => 'Pendiente', 'A' => 'Activa'],
+                ['prompt' => '']
+            ) ?>
+        </div>
 
 
         <div class="col-3">
