@@ -110,11 +110,11 @@ class UsuariosController extends Controller
             if (!empty($fileUpload)) {
                 // $lastImagen = $model->imagen;
                 // GUARDAMOS EL NOMBRE DE LA IMAGEN
-                $model->imagen = $model->imagen = "IMGa_" . $model->id . "." . $fileUpload->extension;
+                $model->imagen = "IMG_" . $model->id . "." . $fileUpload->extension;
 
                 // SI SE GUARDA CORRECTAMENTE EL MODELO
                 if ($model->save()) {
-                    $path = Yii::$app->getBasePath(false) . '\..\upload\\';
+                    $path = '..\..\upload\\';
                     if (!is_dir($path)) {
                         mkdir($path, 0777, true);
                     }
