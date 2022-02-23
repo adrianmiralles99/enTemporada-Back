@@ -2,11 +2,14 @@
 
 namespace app\controllers;
 
-use app\models\Usuarios;
-use app\models\UsuariosSearch;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use app\models\Usuarios;
+use yii\web\UploadedFile;
+use app\models\UploadForm;
 use yii\filters\VerbFilter;
+use app\models\UsuariosSearch;
+use app\controllers\FileUploader;
+use yii\web\NotFoundHttpException;
 
 /**
  * UsuariosController implements the CRUD actions for Usuarios model.
@@ -68,12 +71,15 @@ class UsuariosController extends Controller
     public function actionCreate()
     {
         $model = new Usuarios();
+        $upload = new UploadForm();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                if ($model->save()) {
+                $model->imagen = UploadedFile::getInstance($model, 'imagen');
+                if ($upload->upload())
+                    return $this->render('upload', ['model' => $upload]);
+                if ($model->save())
                     return $this->redirect(['view', 'id' => $model->id]);
-                }
             }
         } else {
             $model->loadDefaultValues();
