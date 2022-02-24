@@ -60,7 +60,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'titulo')->textInput() ?>
         </div>
         <div class="col-2">
-            <?= $form->field($model, 'imagen')->textInput() ?>
+            <?= $form->field($model, 'eventImage')->fileInput()->label("Imagen") ?>
         </div>
 
         <div class="col-2">

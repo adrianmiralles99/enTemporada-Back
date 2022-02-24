@@ -2,12 +2,13 @@
 
 namespace app\controllers;
 
-use app\models\Producto;
-use app\models\ProductoSearch;
 use FileController;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use app\models\Producto;
+use yii\web\UploadedFile;
 use yii\filters\VerbFilter;
+use app\models\ProductoSearch;
+use yii\web\NotFoundHttpException;
 
 /**
  * ProductoController implements the CRUD actions for Producto model.
@@ -72,13 +73,23 @@ class ProductoController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                // $this->img = FileController::actionUpload($model->imagen);
+
+                $fileUpload = UploadedFile::getInstance($model, 'eventImage');
+                $fileUploadB = UploadedFile::getInstance($model, 'eventImageB');
+                if (!empty($fileUpload)) {
+                    $model->imagen = $model->nombre . "." . $fileUpload->extension;
+                }
 
                 if ($model->save()) {
+                    $path = realpath(dirname(getcwd())) . '/../../assets/IMG/Articulos/basic/';
+                    $pathB = realpath(dirname(getcwd())) . '/../../assets/IMG/Articulos/background/';
+                    $fileUpload->saveAs($path . $model->imagen);
+                    $fileUploadB->saveAs($pathB . $model->imagen);
+
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }
-        } else { 
+        } else {
             $model->loadDefaultValues();
         }
 
@@ -99,9 +110,35 @@ class ProductoController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post())) {
-            // (new FileController)->actionUpload($model->imagen);
-            if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+
+            $fileUpload = UploadedFile::getInstance($model, 'eventImage');
+            $fileUploadB = UploadedFile::getInstance($model, 'eventImageB');
+            if (!empty($fileUpload)) {
+                $lastImagen =  $model->imagen;
+                $model->imagen = $model->nombre . "." . $fileUpload->extension;
+
+                // SI SE GUARDA CORRECTAMENTE EL MODELO
+                if ($model->save()) {
+                    $path = realpath(dirname(getcwd())) . '/../../assets/IMG/Articulos/basic/';
+                    $pathB = realpath(dirname(getcwd())) . '/../../assets/IMG/Articulos/background/';
+                    // LA LINEA DE ABAJO SIRVE PARA BORRAR EN CASO DE TENER NOMBRES DIFERENTES
+                    if (file_exists($path . $lastImagen)) {
+                        unlink($path . $lastImagen);
+                    }
+                    if (file_exists($pathB . $lastImagen)) {
+                        unlink($pathB . $lastImagen);
+                    }
+
+                    // SUBIMOS LA IMAGEN
+                    $fileUpload->saveAs($path . $model->imagen);
+                    $fileUploadB->saveAs($pathB . $model->imagen);
+
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } else {
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         }
 

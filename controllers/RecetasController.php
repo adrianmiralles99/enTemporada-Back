@@ -3,10 +3,11 @@
 namespace app\controllers;
 
 use app\models\Recetas;
-use app\models\RecetasSearch;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 use yii\filters\VerbFilter;
+use app\models\RecetasSearch;
+use yii\web\NotFoundHttpException;
 
 /**
  * RecetasController implements the CRUD actions for Recetas model.
@@ -36,7 +37,7 @@ class RecetasController extends Controller
      *
      * @return string
      */
-    public function actionIndex($pendiente=null)
+    public function actionIndex($pendiente = null)
     {
         $searchModel = new RecetasSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, $pendiente);
@@ -70,8 +71,18 @@ class RecetasController extends Controller
         $model = new Recetas();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+
+                $fileUpload = UploadedFile::getInstance($model, 'eventImage');
+                if (!empty($fileUpload)) {
+                    $model->imagen = "IMG_REC_" . rand() . "." . $fileUpload->extension;
+                }
+                if ($model->save()) {
+                    $path = realpath(dirname(getcwd())) . '/../../assets/IMG/recetas/';
+                    $fileUpload->saveAs($path . $model->imagen);
+
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -93,8 +104,31 @@ class RecetasController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+
+            $fileUpload = UploadedFile::getInstance($model, 'eventImage');
+            if (!empty($fileUpload)) {
+                // GUARDAMOS EL NOMBRE DE LA IMAGEN
+                $lastImagen =  $model->imagen;
+                $model->imagen = "IMG_REC_" . rand() . "." . $fileUpload->extension;
+
+                // SI SE GUARDA CORRECTAMENTE EL MODELO
+                if ($model->save()) {
+                    $path = realpath(dirname(getcwd())) . '/../../assets/IMG/recetas/';
+                    // LA LINEA DE ABAJO SIRVE PARA BORRAR EN CASO DE TENER NOMBRES DIFERENTES
+                    if (file_exists($path . $lastImagen)) {
+                        unlink($path . $lastImagen);
+                    }
+                    // SUBIMOS LA IMAGEN
+                    $fileUpload->saveAs($path . $model->imagen);
+
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } else {
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
         }
 
         return $this->render('update', [
@@ -111,7 +145,12 @@ class RecetasController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $path = realpath(dirname(getcwd())) . '/../../assets/IMG/recetas/';
+        $model = $this->findModel($id);
+        if (file_exists($path . $model->imagen)) {
+            unlink($path . $model->imagen);
+        }
+        $model->delete();
 
         return $this->redirect(['index']);
     }

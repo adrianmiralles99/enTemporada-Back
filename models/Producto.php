@@ -40,6 +40,8 @@ class Producto extends \yii\db\ActiveRecord
             [['nombre'], 'string', 'max' => 20],
             [['imagen'], 'string', 'max' => 100],
             [['color'], 'string', 'max' => 40],
+            [['eventImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png'],
+            [['eventImageB'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png'],
         ];
     }
 

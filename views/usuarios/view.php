@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usuarios-view">
 
-    <h1 class="titulo"><?= Html::encode($this->title)?></h1>
+    <h1 class="titulo"><?= Html::encode($this->title) ?></h1>
     <br>
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -33,14 +33,30 @@ $this->params['breadcrumbs'][] = $this->title;
             'nombre',
             'apellidos',
             'nick',
+            [
+                'attribute' => 'imagen',
+                'label' => "<img draggable=false height='50' width='50'style='border-radius:100%; margin-right:10px;' src='../../../upload/Usuarios/" . $model->imagen . "' alt='no va'>
+                </span>Imagen<span>",
+                'format' => 'raw',
+                'value' => $model->imagen
+            ],
             'correo',
-            'password',
-            'imagen',
+            // 'password',
             'descripcion:ntext',
             'localidad',
             'direccion',
-            'tipoText',
-            // 'estado',
+            [
+                'attribute' => 'tipo',
+                'label' => "Tipo de Usuario",
+                'format' => 'raw',
+                'value' => $model->tipoText
+            ],
+            [
+                'attribute' => 'estado',
+                'label' => "Estado del Usuario",
+                'format' => 'raw',
+                'value' => $model->estadoText
+            ],
             // 'token',
             // 'fecha_cad',
             'exp',

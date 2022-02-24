@@ -17,6 +17,7 @@ use yii\web\NotFoundHttpException;
  */
 class UsuariosController extends Controller
 {
+
     /**
      * @inheritDoc
      */
@@ -72,17 +73,20 @@ class UsuariosController extends Controller
     public function actionCreate()
     {
         $model = new Usuarios();
-        // $upload = new UploadForm();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                // $model->imagen = UploadedFile::getInstance($model, 'imagen');
-                // if ($upload->upload()) {
-                //     var_dump("hola");
-                //     die();
-                // }
-                if ($model->save())
+
+                $fileUpload = UploadedFile::getInstance($model, 'eventImage');
+                if (!empty($fileUpload)) {
+                    $model->imagen = "IMG_USER_" . rand() . "." . $fileUpload->extension;
+                }
+                if ($model->save()) {
+                    $path = realpath(dirname(getcwd())) . '/../../assets/IMG/Usuarios/';
+                    $fileUpload->saveAs($path . $model->imagen);
+
                     return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -108,21 +112,21 @@ class UsuariosController extends Controller
 
             $fileUpload = UploadedFile::getInstance($model, 'eventImage');
             if (!empty($fileUpload)) {
-                // $lastImagen = $model->imagen;
                 // GUARDAMOS EL NOMBRE DE LA IMAGEN
-                $model->imagen = "IMG_" . $model->id . "." . $fileUpload->extension;
+                $lastImagen =  $model->imagen;
+                $model->imagen = "IMG_USER_" . rand() . "." . $fileUpload->extension;
 
                 // SI SE GUARDA CORRECTAMENTE EL MODELO
                 if ($model->save()) {
-                    $path = '..\..\upload\\';
-                    if (!is_dir($path)) {
-                        mkdir($path, 0777, true);
+                    $path = realpath(dirname(getcwd())) . '/../../assets/IMG/Usuarios/';
+                    // LA LINEA DE ABAJO SIRVE PARA BORRAR EN CASO DE TENER NOMBRES DIFERENTES
+                    if (file_exists($path . $lastImagen)) {
+                        unlink($path . $lastImagen);
                     }
 
                     // SUBIMOS LA IMAGEN
                     $fileUpload->saveAs($path . $model->imagen);
-                    // LA LINEA DE ABAJO SIRVE PARA BORRAR EN CASO DE TENER NOMBRES DIFERENTES
-                    // unlink(Yii::$app->getBasePath(false) . '\IMG\\' . $lastImagen);
+
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             } else {
@@ -147,7 +151,12 @@ class UsuariosController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $path = realpath(dirname(getcwd())) . '/../../assets/IMG/Usuarios/';
+        $model = $this->findModel($id);
+        if (file_exists($path . $model->imagen)) {
+            unlink($path . $model->imagen);
+        }
+        $model->delete();
 
         return $this->redirect(['index']);
     }

@@ -133,6 +133,13 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
         return self::$tipoUsuarios[$this->tipo];
     }
 
+    static $tipoEstado = ["A" => "Activo",  "P" => "Pendiente", "B" => "Bloqueado"];
+
+    public function getEstadoText()
+    {
+        return self::$tipoEstado[$this->estado];
+    }
+
     public static function findByUsername($username)
     {
         return static::findOne(['nick' => $username]);

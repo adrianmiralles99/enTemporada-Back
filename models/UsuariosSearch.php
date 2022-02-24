@@ -38,7 +38,7 @@ class UsuariosSearch extends Usuarios
      *
      * @return ActiveDataProvider
      */
-    public function search($params, $pendiente)
+    public function search($params, $pendiente = null)
     {
         $query = Usuarios::find();
 
@@ -76,7 +76,7 @@ class UsuariosSearch extends Usuarios
             ->andFilterWhere(['like', 'tipo', $this->tipo])
             ->andFilterWhere(['like', 'estado', $this->estado])
             ->andFilterWhere(['like', 'token', $this->token]);
-            
+
         if ($pendiente) {
             $query->andWhere("estado='$pendiente'");
         }

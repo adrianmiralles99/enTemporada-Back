@@ -18,7 +18,10 @@ use yii\widgets\ActiveForm;
         </div>
 
         <div class="col-3">
-            <?= $form->field($model, 'imagen')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'eventImage')->fileInput()->label("Imagen Basic") ?>
+        </div>
+        <div class="col-3">
+            <?= $form->field($model, 'eventImageB')->fileInput()->label("Imagen Background") ?>
         </div>
 
         <div class="col-3">

@@ -22,9 +22,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'nick')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-3">
-            <!-- <input type="file" id="usuarios-imagen" name="Usuarios[imagen]"> -->
-            <?= $form->field($model, 'eventImage')->fileInput() ?>
-            <!-- <input type="file" id="usuarios-imagen" name="Usuarios[eventImage]"> -->
+            <?= $form->field($model, 'eventImage')->fileInput()->label("Imagen") ?>
         </div>
         <div class="col-12">
             <?= $form->field($model, 'correo')->textInput(['maxlength' => true]) ?>
