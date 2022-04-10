@@ -43,11 +43,30 @@ AppAsset::register($this);
         } else {
             $items =
                 [
-                    ['label' => 'Petición de registro', 'url' => ['/usuarios', "pendiente" => "P"]],
                     ['label' => 'Productos', 'url' => ['/producto']],
-                    ['label' => 'Usuarios registrados', 'url' => ['/usuarios', "pendiente" => "A"]],
-                    ['label' => 'Recetas', 'url' => ['/recetas', "pendiente" => "A"]],
-                    ['label' => 'Recetas pendientes', 'url' => ['/recetas', "pendiente" => "P"]],
+                    ['label' => 'Usuarios', 'items' => [
+                        ['label' => 'Usuarios registrados', 'url' => ['/usuarios', "pendiente" => "A"]],
+                        ['label' => 'Usuarios pendientes', 'url' => ['/usuarios', "pendiente" => "P"]],
+                        ['label' => 'Usuarios bloqueados', 'url' => ['/usuarios', "pendiente" => "B"]],
+
+                    ]],
+                    ['label' => 'Recetas', 'items' => [
+                        ['label' => 'Recetas registradas', 'url' => ['/recetas', "pendiente" => "A"]],
+                        ['label' => 'Recetas pendientes', 'url' => ['/recetas', "pendiente" => "P"]],
+                    ]],
+                    ['label' => 'Categorías', 'url' => ['/categorias']],
+                    ['label' => 'Entradas blog', 'items' => [
+                        ['label' => 'Entradas registradas', 'url' => ['/entradas', "estado" => "A"]],
+                        ['label' => 'Entradas pendientes', 'url' => ['/entradas', "estado" => "P"]],
+                    ]],
+                    ['label' => 'Reportes', 'url' => ['/reportes']],
+
+                    ['label' => 'Comentarios', 'items' => [
+                        ['label' => 'Comentarios', 'url' => ['/comentarios']],
+                        ['label' => 'Subcomentarios', 'url' => ['/subcomentarios']],
+                    ]],
+                  
+
                 ];
 
 
@@ -65,18 +84,18 @@ AppAsset::register($this);
 
         NavBar::begin([
 
-            'brandLabel' => "<img class='imagen' src='../IMG/tituloW.png' alt=''>" . Yii::$app->name,
+            'brandLabel' => "<div class='logo'><img class='imagen'  src='../IMG/tituloW.png' alt='enTemporada'>" . Yii::$app->name . "</div>",
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar navbar-expand-md navbar-dark barra fixed-top',
             ],
         ]);
         echo Nav::widget([
-            'options' => ['class' => 'navbar-nav ml-5 mr-auto mt-2 mt-lg-0'],
+            'options' => ['class' => 'navbar-nav ml-auto mr-auto mt-2 mt-lg-0'],
             'items' => $items
         ]);
         echo Nav::widget([
-            'options' => ['class' => 'navbar-nav my-lg-0'],
+            'options' => ['class' => 'botonperfil navbar-nav my-lg-0'],
             'items' => $perfil
         ]);
         NavBar::end();

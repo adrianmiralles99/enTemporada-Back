@@ -61,7 +61,13 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->getUser()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+          
+            if (($this->getUser()["tipo"]) =="A"){
+                return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            }else{
+                $this->addError("nick", 'No tiene permisos de administrador');
+
+            }
         } else {
             $this->addError("password", 'Usuario o password incorrecto');
         }

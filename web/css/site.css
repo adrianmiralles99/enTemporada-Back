@@ -84,11 +84,34 @@ a.desc:after {
 .imagen {
     height: 80px;
 }
+.logo{
+    margin-left: -50px;
+}
+.botonperfil{
+    margin-left: 20px;
+    margin-right: -50px;
 
+}
 .nav {
     font-family: recoletaR;
 }
+.comentarios{
+    background-color: #414240;
+}
+.comentarios a {
+    font-weight: bolder;
+}
+.comentarios th {
+    color: white;
+}
 
+.subcomentario td{
+background-color: #BEBFBE ;
+}
+.comentario td{
+    background-color: #848683 ;
+
+}
 .navbar-dark .navbar-nav .nav-link {
     color: white;
 }
@@ -130,6 +153,22 @@ a.desc:after {
 
 .barra {
     background-color: #175537;
+  
+
+}
+ul#w1 li{
+    font-size: 115%;
+    /*border: red 2px solid;*/
+    margin-right: 10px;
+    margin-left: 10px;
+
+}
+ul#w2 li{
+    font-size: 115%;
+    /*border: red 2px solid;*/
+    margin-right: 10px;
+    margin-left: 10px;
+
 }
 
 main > .container {

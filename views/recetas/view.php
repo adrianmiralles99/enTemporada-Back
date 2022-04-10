@@ -31,13 +31,50 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'id_usuario',
+            [
+                'attribute' => 'id_usuario',
+                'label' => 'Usuario',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    return "ID: " . $data->usuario->id . "<br>Nombre: " . $data->usuario->nombre;
+                }
+            ],
             'tipo',
             'fecha',
-            'id_prodp',
-            'estado',
-            'imagen',
-            'titulo',
+            [
+                'attribute' => 'id_prodp',
+                'label' => 'Producto Principal',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    return "ID: " . $data->prodp->id . "<br>Nombre: " . $data->prodp->nombre;
+                }
+            ],
+            [
+                'attribute' => 'estado',
+                'label' => 'Estado',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    if ($data->estado =="A"){
+                        return "Activa";
+                    }else{
+                        return "Pendiente";
+                    }
+                }
+            ],
+            [
+                'attribute' => 'imagen',
+                //'label' => "<img draggable=false height='50' width='50'style='border-radius:100%; margin-right:10px;' src='../../../upload/Usuarios/" . $model->imagen . "' alt='no va'>
+                'label' => 'Imagen',
+                
+                'format' => 'raw',
+                'value' => function ($model) {
+                   $ret =  $model->imagen;
+                   $ret .= "<br>";
+                   $ret.="<img draggable=false height='90' width='90'style='margin-right:10px;' src='/../../assets/IMG/recetas/" . $model->imagen . "' alt='no va'>";
+                    return $ret;
+                }
+
+            ],            'titulo',
             'tiempo',
             'comensales',
             'dificultad',

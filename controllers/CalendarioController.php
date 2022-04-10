@@ -2,8 +2,10 @@
 
 namespace app\controllers;
 
+use Yii;
 use app\models\Calendario;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use yii\rest\ActiveController;
 use app\models\CalendarioSearch;
 use yii\web\NotFoundHttpException;
@@ -18,19 +20,33 @@ class CalendarioController extends ActiveController
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::class,
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-            ]
-        );
-    }
+         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create','delete','update', 'index', 'view'],
+                'rules' => [
+                    ['allow' => true,
+                     'actions' => ['create', 'delete', 'update', 'index', 'view'],
+                     'matchCallback' => function ($rule, $action) {
+                                            if (!Yii::$app->user->isGuest){
+                                                return Yii::$app->user->identity->hasRole('A');
 
+                                            }
+                                        }
+ 
+                    ],
+                    ['allow' => false,
+                    'actions' => ['create', 'delete', 'update', 'index', 'view'],
+                    'matchCallback' => function ($rule, $action) {
+                                           return !Yii::$app->user->isGuest;
+                                        }
+ 
+                    ],
+ 
+                ],
+            ],
+        ];
+    }
     /**
      * Lists all Calendario models.
      *

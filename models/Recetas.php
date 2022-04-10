@@ -29,6 +29,8 @@ use Yii;
  */
 class Recetas extends \yii\db\ActiveRecord
 {
+    public $eventImage;
+
     /**
      * {@inheritdoc}
      */

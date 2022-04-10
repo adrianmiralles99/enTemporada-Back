@@ -2,11 +2,13 @@
 
 namespace app\controllers;
 
+use Yii;
 use app\models\Recetas;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 use yii\filters\VerbFilter;
 use app\models\RecetasSearch;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -17,6 +19,7 @@ class RecetasController extends Controller
     /**
      * @inheritDoc
      */
+    /*
     public function behaviors()
     {
         return array_merge(
@@ -30,6 +33,35 @@ class RecetasController extends Controller
                 ],
             ]
         );
+    }*/
+    public function behaviors()
+    {
+         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create','delete','update', 'index', 'view'],
+                'rules' => [
+                    ['allow' => true,
+                     'actions' => ['create', 'delete', 'update', 'index', 'view'],
+                     'matchCallback' => function ($rule, $action) {
+                                            if (!Yii::$app->user->isGuest){
+                                                return Yii::$app->user->identity->hasRole('A');
+
+                                            }
+                                        }
+ 
+                    ],
+                    ['allow' => false,
+                    'actions' => ['create', 'delete', 'update', 'index', 'view'],
+                    'matchCallback' => function ($rule, $action) {
+                                           return !Yii::$app->user->isGuest;
+                                        }
+ 
+                    ],
+ 
+                ],
+            ],
+        ];
     }
 
     /**
@@ -38,7 +70,8 @@ class RecetasController extends Controller
      * @return string
      */
     public function actionIndex($pendiente = null)
-    {
+    {   
+        
         $searchModel = new RecetasSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, $pendiente);
 
@@ -72,15 +105,13 @@ class RecetasController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-
                 $fileUpload = UploadedFile::getInstance($model, 'eventImage');
                 if (!empty($fileUpload)) {
                     $model->imagen = "IMG_REC_" . rand() . "." . $fileUpload->extension;
                 }
                 if ($model->save()) {
-                    $path = realpath(dirname(getcwd())) . '/../../assets/IMG/recetas/';
+                    $path = realpath(dirname(getcwd())) . '/../assets/IMG/recetas/';
                     $fileUpload->saveAs($path . $model->imagen);
-
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }
@@ -114,7 +145,7 @@ class RecetasController extends Controller
 
                 // SI SE GUARDA CORRECTAMENTE EL MODELO
                 if ($model->save()) {
-                    $path = realpath(dirname(getcwd())) . '/../../assets/IMG/recetas/';
+                    $path = realpath(dirname(getcwd())) . '/../assets/IMG/recetas/';
                     // LA LINEA DE ABAJO SIRVE PARA BORRAR EN CASO DE TENER NOMBRES DIFERENTES
                     if (file_exists($path . $lastImagen)) {
                         unlink($path . $lastImagen);

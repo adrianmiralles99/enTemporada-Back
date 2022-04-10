@@ -40,6 +40,7 @@ class RecetasSearch extends Recetas
      */
     public function search($params, $pendiente = null)
     {
+        
         $query = Recetas::find();
 
         // add conditions that should always apply here

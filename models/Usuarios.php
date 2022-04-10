@@ -126,7 +126,7 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
         return $this->hasMany(Recetas::class, ['id_usuario' => 'id']);
     }
 
-    static $tipoUsuarios = ["U" => "Usuario",  "A" => "Administrdor"];
+    static $tipoUsuarios = ["U" => "Usuario",  "A" => "Administrador"];
 
     public function getTipoText()
     {
@@ -175,4 +175,11 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     {
         return $this->password === md5($password); // Si se utiliza otra función de encriptación distinta a md5, habrá que cambiar esta línea
     }
+
+    function hasRole($role){
+        return $this->tipo==$role;
+        //return in_array($this->roles,$role);  Si es un array de roles
+    }
+        
+     
 }

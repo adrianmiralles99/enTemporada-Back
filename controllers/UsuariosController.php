@@ -9,6 +9,7 @@ use yii\web\UploadedFile;
 use app\models\UploadForm;
 use yii\filters\VerbFilter;
 use app\models\UsuariosSearch;
+use yii\filters\AccessControl;
 use app\controllers\FileUploader;
 use yii\web\NotFoundHttpException;
 
@@ -23,18 +24,34 @@ class UsuariosController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::class,
-                    'actions' => [
-                        'delete' => ['POST'],
+         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create','delete','update', 'index', 'view'],
+                'rules' => [
+                    ['allow' => true,
+                     'actions' => ['create', 'delete', 'update', 'index', 'view'],
+                     'matchCallback' => function ($rule, $action) {
+                                            if (!Yii::$app->user->isGuest){
+                                                return Yii::$app->user->identity->hasRole('A');
+
+                                            }
+                                        }
+ 
                     ],
+                    ['allow' => false,
+                    'actions' => ['create', 'delete', 'update', 'index', 'view'],
+                    'matchCallback' => function ($rule, $action) {
+                                           return !Yii::$app->user->isGuest;
+                                        }
+ 
+                    ],
+ 
                 ],
-            ]
-        );
+            ],
+        ];
     }
+    
 
     /**
      * Lists all Usuarios models.
@@ -78,9 +95,12 @@ class UsuariosController extends Controller
             if ($model->load($this->request->post())) {
 
                 $fileUpload = UploadedFile::getInstance($model, 'eventImage');
+               
                 if (!empty($fileUpload)) {
                     $model->imagen = "IMG_USER_" . rand() . "." . $fileUpload->extension;
                 }
+              
+
                 if ($model->save()) {
                     $path = realpath(dirname(getcwd())) . '/../../assets/IMG/Usuarios/';
                     $fileUpload->saveAs($path . $model->imagen);
@@ -111,22 +131,24 @@ class UsuariosController extends Controller
         if ($this->request->isPost && $model->load($this->request->post())) {
 
             $fileUpload = UploadedFile::getInstance($model, 'eventImage');
+           
             if (!empty($fileUpload)) {
                 // GUARDAMOS EL NOMBRE DE LA IMAGEN
                 $lastImagen =  $model->imagen;
                 $model->imagen = "IMG_USER_" . rand() . "." . $fileUpload->extension;
-
+                
+              
                 // SI SE GUARDA CORRECTAMENTE EL MODELO
                 if ($model->save()) {
-                    $path = realpath(dirname(getcwd())) . '/../../assets/IMG/Usuarios/';
+                    $path = realpath(dirname(getcwd())) . '/../assets/IMG/Usuarios/';
                     // LA LINEA DE ABAJO SIRVE PARA BORRAR EN CASO DE TENER NOMBRES DIFERENTES
                     if (file_exists($path . $lastImagen)) {
                         unlink($path . $lastImagen);
                     }
-
+                    
                     // SUBIMOS LA IMAGEN
-                    $fileUpload->saveAs($path . $model->imagen);
-
+                    $fileUpload->saveAs($path . $model->imagen);//AQUÍ ESTA EL ERROR
+                   
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             } else {
@@ -151,7 +173,7 @@ class UsuariosController extends Controller
      */
     public function actionDelete($id)
     {
-        $path = realpath(dirname(getcwd())) . '/../../assets/IMG/Usuarios/';
+        $path = realpath(dirname(getcwd())) . '/../assets/IMG/Usuarios/';
         $model = $this->findModel($id);
         if (file_exists($path . $model->imagen)) {
             unlink($path . $model->imagen);

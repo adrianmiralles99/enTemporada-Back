@@ -35,10 +35,17 @@ $this->params['breadcrumbs'][] = $this->title;
             'nick',
             [
                 'attribute' => 'imagen',
-                'label' => "<img draggable=false height='50' width='50'style='border-radius:100%; margin-right:10px;' src='../../../upload/Usuarios/" . $model->imagen . "' alt='no va'>
-                </span>Imagen<span>",
+                //'label' => "<img draggable=false height='50' width='50'style='border-radius:100%; margin-right:10px;' src='../../../upload/Usuarios/" . $model->imagen . "' alt='no va'>
+                'label' => 'Imagen',
+                
                 'format' => 'raw',
-                'value' => $model->imagen
+                'value' => function ($model) {
+                   $ret =  $model->imagen;
+                   $ret .= "<br>";
+                   $ret.="<img draggable=false height='80' width='80'style='border-radius:100%; margin-right:10px;' src='/../../assets/IMG/Usuarios/" . $model->imagen . "' alt='no va'>";
+                    return $ret;
+                }
+
             ],
             'correo',
             // 'password',

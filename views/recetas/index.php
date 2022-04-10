@@ -22,7 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Creacion de Recetas', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    <?php
+    // echo $this->render('_search', ['model' => $searchModel]); 
     ?>
 
     <?= GridView::widget([
@@ -42,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Usuario',
                 'format' => 'raw',
                 'value' => function ($data) {
-                    return "ID: " . $data->usuario->id . "<br>Nombre: " . $data->usuario->nombre;
+                    return "ID: " . $data->usuario->id . "<br>Nick: " . $data->usuario->nick;
                 }
             ],
             'tipo',

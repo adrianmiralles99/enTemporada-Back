@@ -2,12 +2,14 @@
 
 namespace app\controllers;
 
+use Yii;
 use FileController;
 use yii\web\Controller;
 use app\models\Producto;
 use yii\web\UploadedFile;
 use yii\filters\VerbFilter;
 use app\models\ProductoSearch;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -20,17 +22,32 @@ class ProductoController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create','delete','update', 'index', 'view'],
+                'rules' => [
+                    ['allow' => true,
+                     'actions' => ['create', 'delete', 'update', 'index', 'view'],
+                     'matchCallback' => function ($rule, $action) {
+                                            if (!Yii::$app->user->isGuest){
+                                                return Yii::$app->user->identity->hasRole('A');
+
+                                            }
+                                        }
+ 
                     ],
+                    ['allow' => false,
+                    'actions' => ['create', 'delete', 'update', 'index', 'view'],
+                    'matchCallback' => function ($rule, $action) {
+                                           return !Yii::$app->user->isGuest;
+                                        }
+ 
+                    ],
+ 
                 ],
-            ]
-        );
+            ],
+        ];
     }
 
     /**
@@ -81,8 +98,8 @@ class ProductoController extends Controller
                 }
 
                 if ($model->save()) {
-                    $path = realpath(dirname(getcwd())) . '/../../assets/IMG/Articulos/basic/';
-                    $pathB = realpath(dirname(getcwd())) . '/../../assets/IMG/Articulos/background/';
+                    $path = realpath(dirname(getcwd())) . '/../assets/IMG/Articulos/basic/';
+                    $pathB = realpath(dirname(getcwd())) . '/../assets/IMG/Articulos/background/';
                     $fileUpload->saveAs($path . $model->imagen);
                     $fileUploadB->saveAs($pathB . $model->imagen);
 
@@ -119,8 +136,8 @@ class ProductoController extends Controller
 
                 // SI SE GUARDA CORRECTAMENTE EL MODELO
                 if ($model->save()) {
-                    $path = realpath(dirname(getcwd())) . '/../../assets/IMG/Articulos/basic/';
-                    $pathB = realpath(dirname(getcwd())) . '/../../assets/IMG/Articulos/background/';
+                    $path = realpath(dirname(getcwd())) . '/../assets/IMG/Articulos/basic/';
+                    $pathB = realpath(dirname(getcwd())) . '/../assets/IMG/Articulos/background/';
                     // LA LINEA DE ABAJO SIRVE PARA BORRAR EN CASO DE TENER NOMBRES DIFERENTES
                     if (file_exists($path . $lastImagen)) {
                         unlink($path . $lastImagen);

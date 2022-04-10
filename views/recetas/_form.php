@@ -96,9 +96,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'dificultad')->dropDownList(['Fácil' => 'Fácil', 'Intermedia' => 'Intermedia', 'Difícil' => 'Difícil'], ['prompt' => '']) ?>
 
         </div>
-        <div class="col-2">
-            <?= $form->field($model, 'estado')->dropDownList(['A' => 'Activo', 'P' => 'Pendiente', 'B' => 'Bloqueado',], ['prompt' => '']) ?>
-        </div>
+        
 
         <div class="col-12">
             <?php
