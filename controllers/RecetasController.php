@@ -110,7 +110,10 @@ class RecetasController extends Controller
                     $model->imagen = "IMG_REC_" . rand() . "." . $fileUpload->extension;
                 }
                 if ($model->save()) {
-                    $path = realpath(dirname(getcwd())) . '/../assets/IMG/recetas/';
+                     //RUTA DE PROYECTO EN LOCALHOST
+                    //$path = realpath(dirname(getcwd())) . '/../assets/IMG/recetas/';
+                    //RUTA DE PROYECTO EN SERVER
+                    $path = realpath(dirname(getcwd())) . '/../../assets/IMG/recetas/';
                     $fileUpload->saveAs($path . $model->imagen);
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
@@ -145,7 +148,10 @@ class RecetasController extends Controller
 
                 // SI SE GUARDA CORRECTAMENTE EL MODELO
                 if ($model->save()) {
-                    $path = realpath(dirname(getcwd())) . '/../assets/IMG/recetas/';
+                    //RUTA DE PROYECTO EN LOCALHOST
+                    //$path = realpath(dirname(getcwd())) . '/../assets/IMG/recetas/';
+                    //RUTA DE PROYECTO EN SERVER
+                    $path = realpath(dirname(getcwd())) . '/../../assets/IMG/recetas/';
                     // LA LINEA DE ABAJO SIRVE PARA BORRAR EN CASO DE TENER NOMBRES DIFERENTES
                     if (file_exists($path . $lastImagen)) {
                         unlink($path . $lastImagen);

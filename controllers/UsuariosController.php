@@ -102,9 +102,11 @@ class UsuariosController extends Controller
               
 
                 if ($model->save()) {
+                   //RUTA DE PROYECTO EN LOCALHOST
+                    //$path = realpath(dirname(getcwd())) . '/../assets/IMG/Usuarios/';
+                    //RUTA DE PROYECTO EN SERVER
                     $path = realpath(dirname(getcwd())) . '/../../assets/IMG/Usuarios/';
                     $fileUpload->saveAs($path . $model->imagen);
-
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }
@@ -140,7 +142,10 @@ class UsuariosController extends Controller
               
                 // SI SE GUARDA CORRECTAMENTE EL MODELO
                 if ($model->save()) {
-                    $path = realpath(dirname(getcwd())) . '/../assets/IMG/Usuarios/';
+                    //RUTA DE PROYECTO EN LOCALHOST
+                    //$path = realpath(dirname(getcwd())) . '/../assets/IMG/Usuarios/';
+                    //RUTA DE PROYECTO EN SERVER
+                    $path = realpath(dirname(getcwd())) . '/../../assets/IMG/Usuarios/';
                     // LA LINEA DE ABAJO SIRVE PARA BORRAR EN CASO DE TENER NOMBRES DIFERENTES
                     if (file_exists($path . $lastImagen)) {
                         unlink($path . $lastImagen);

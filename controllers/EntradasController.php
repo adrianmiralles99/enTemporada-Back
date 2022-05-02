@@ -96,7 +96,10 @@ class EntradasController extends Controller
                     $model->imagen = "IMG_REC_" . rand() . "." . $fileUpload->extension;
                 }
                 if ($model->save()) {
-                    $path = realpath(dirname(getcwd())) . '/../assets/IMG/entradas/';
+                    //RUTA DE PROYECTO EN LOCALHOST
+                    //$path = realpath(dirname(getcwd())) . '/../assets/IMG/entradas/';
+                    //RUTA DE PROYECTO EN SERVER
+                    $path = realpath(dirname(getcwd())) . '/../../assets/IMG/entradas/';
                     $fileUpload->saveAs($path . $model->imagen);
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
@@ -129,7 +132,10 @@ class EntradasController extends Controller
                 $model->imagen = "IMG_REC_" . rand() . "." . $fileUpload->extension;
                  // SI SE GUARDA CORRECTAMENTE EL MODELO
                  if ($model->save()) {
-                    $path = realpath(dirname(getcwd())) . '/../assets/IMG/entradas/';
+                    //RUTA DE PROYECTO EN LOCALHOST
+                    //$path = realpath(dirname(getcwd())) . '/../assets/IMG/entradas/';
+                    //RUTA DE PROYECTO EN SERVER
+                    $path = realpath(dirname(getcwd())) . '/../../assets/IMG/entradas/';
                     // LA LINEA DE ABAJO SIRVE PARA BORRAR EN CASO DE TENER NOMBRES DIFERENTES
                     if (file_exists($path . $lastImagen)) {
                         unlink($path . $lastImagen);
