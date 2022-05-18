@@ -10,11 +10,15 @@ use Yii;
  * @property int $id
  * @property string $nombre
  * @property string $descripcion
- *
+ * @property string $imagen
+
  * @property Entradas[] $entradas
  */
 class Categorias extends \yii\db\ActiveRecord
 {
+
+    public $eventImage;
+
     /**
      * {@inheritdoc}
      */
@@ -32,6 +36,9 @@ class Categorias extends \yii\db\ActiveRecord
             [['nombre', 'descripcion'], 'required'],
             [['descripcion'], 'string'],
             [['nombre'], 'string', 'max' => 30],
+            [['imagen'], 'string', 'max' => 40],
+            [['eventImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+
         ];
     }
 
@@ -44,6 +51,8 @@ class Categorias extends \yii\db\ActiveRecord
             'id' => 'ID',
             'nombre' => 'Nombre',
             'descripcion' => 'Descripcion',
+            'imagen' => 'Imagen',
+
         ];
     }
 

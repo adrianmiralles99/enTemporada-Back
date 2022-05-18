@@ -16,11 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <h1 class="titulo"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Actualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Borrar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => '¿Estás seguro de que vas a borrar este item?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -32,6 +32,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'nombre',
             'descripcion:ntext',
+            [
+                'attribute' => 'imagen',
+                //'label' => "<img draggable=false height='50' width='50'style='border-radius:100%; margin-right:10px;' src='../../../upload/Usuarios/" . $model->imagen . "' alt='no va'>
+                'label' => 'Imagen',
+                
+                'format' => 'raw',
+                'value' => function ($model) {
+                   $ret =  $model->imagen;
+                   $ret .= "<br>";
+                   $ret.="<img draggable=false height='90' width='90'style=' margin-right:10px;' src='/../../assets/IMG/categorias/" . $model->imagen . "' alt='no va'>";
+                    return $ret;
+                }
+            ],         
         ],
     ]) ?>
 

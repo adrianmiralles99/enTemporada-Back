@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\web\YiiAsset;
 use yii\bootstrap4\Button;
 use yii\widgets\DetailView;
+use app\controllers\UsuariosController;
+ 
 /* @var $this yii\web\View */
 /* @var $model app\models\Reportes */
 
@@ -17,11 +19,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <h1 class="titulo"> <?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Actualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Bprrar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => '¿Estás seguro de que vas a borrar este item?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -37,7 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     }
      ?>
+     
     <?= DetailView::widget([
+        
         'model' => $model,
         'attributes' => [
             'id',

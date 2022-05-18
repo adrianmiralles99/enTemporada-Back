@@ -27,10 +27,10 @@ class UsuariosController extends Controller
          return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create','delete','update', 'index', 'view'],
+                'only' => ['create','delete','update', 'index', 'view','nivelchef', 'bloquearusuario'],
                 'rules' => [
                     ['allow' => true,
-                     'actions' => ['create', 'delete', 'update', 'index', 'view'],
+                     'actions' => ['create', 'delete', 'update', 'index', 'view', 'nivelchef'],
                      'matchCallback' => function ($rule, $action) {
                                             if (!Yii::$app->user->isGuest){
                                                 return Yii::$app->user->identity->hasRole('A');
@@ -52,7 +52,18 @@ class UsuariosController extends Controller
         ];
     }
     
-
+    public function actionBloquearusuario($id){
+      
+        $uid = Yii::$app->user->identity->id;
+        $model = Usuarios::findOne($id);
+        if ($model->tipo=='A'){
+            throw new NotFoundHttpException('No se puede bloquear a un admin');
+        }else{
+            echo "todo fue bien";
+            $model->estado=='B';
+            $model->save();
+        }
+    }
     /**
      * Lists all Usuarios models.
      *
@@ -60,6 +71,7 @@ class UsuariosController extends Controller
      */
     public function actionIndex($pendiente)
     {
+       
         $searchModel = new UsuariosSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, $pendiente);
 
@@ -68,7 +80,17 @@ class UsuariosController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+  
+    public function actionNivelchef()
+    {
+        $searchModel = new UsuariosSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams, "A");
 
+        return $this->render('nivelchef', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
     /**
      * Displays a single Usuarios model.
      * @param int $id ID

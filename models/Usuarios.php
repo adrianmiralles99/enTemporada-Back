@@ -3,8 +3,9 @@
 namespace app\models;
 
 use Yii;
+use app\models\Usuarios;
 use yii\web\UploadedFile;
-
+use app\models\Notificaciones;
 /**
  * This is the model class for table "usuarios".
  *
@@ -29,6 +30,8 @@ use yii\web\UploadedFile;
  * @property Likes[] $likes
  * @property Recetas[] $recetas
  * @property Recetas[] $recetas0
+ * @property Recetas[] $Notificaciones
+
  */
 class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
@@ -86,11 +89,26 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
         ];
     }
 
+    public function getUsuarios(){
+      
+        return $this->hasMany(Recetas::class, ['id_usuario' => 'id']);
+    }
+    public function getUsuariosAprobados(){
+        //return Subcomentarios::find()->select('texto, id')->where(['id_comentarioprinc' => $idcomentario])->all();
+        //var_dump(Usuarios::find()->select('nombre, id')->where(['estado' => "A"])->all());
+       return Usuarios::find()->select('nombre, id, exp, nick')->where(['estado' => "A"])->all();
+    }
+
+    public function getNotificaciones($id_usuario){
+        return Notificaciones::find()->where(['id_usuario' => $id_usuario])->all();
+    }
     /**
      * Gets query for [[Favoritos]].
      *
      * @return \yii\db\ActiveQuery
      */
+
+    
     public function getFavoritos()
     {
         return $this->hasMany(Favoritos::class, ['id_usuario' => 'id']);
@@ -149,7 +167,6 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     {
         return static::findOne($id);
     }
-
     public function getId()
     {
         return $this->id;

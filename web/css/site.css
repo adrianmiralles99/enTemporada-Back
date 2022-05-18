@@ -104,7 +104,14 @@ a.desc:after {
 .comentarios th {
     color: white;
 }
-
+.enlacenotificacion{
+    color: white;
+    text-decoration: none;
+}
+.enlacenotificacion:hover{
+    color: white;
+    text-decoration: none;
+}
 .subcomentario td{
 background-color: #BEBFBE ;
 }

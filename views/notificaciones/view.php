@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\LikesEntrada */
+/* @var $model app\models\Notificaciones */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Likes Entradas', 'url' => ['index']];
+$this->title = $model->asunto;
+$this->params['breadcrumbs'][] = ['label' => 'Notificaciones', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="likes-entrada-view">
+<div class="notificaciones-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -30,8 +30,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'id_usuario',
-            'id_entrada',
+            [
+                'attribute' => 'id_usuario',
+                'label' => 'Usuario notificado',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    return "ID: " . $data->usuario->id . "<br>Nombre: " . $data->usuario->nombre;
+                }
+            ],
+            'asunto',
+            'texto',
         ],
     ]) ?>
 

@@ -7,12 +7,13 @@ use app\models\Usuarios;
 use yii\grid\ActionColumn;
 use yii\grid\CheckboxColumn;
 
+use yii\web\JsExpression;
+use daixianceng\echarts\ECharts;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UsuariosSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Usuarios';
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="usuarios-index">
 
@@ -20,13 +21,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Creación de Usuario', ['create'], ['class' => 'btn btn-success']) ?>
+       
+
+        <?= Html::a('Gráficos Nivel Chef', ['nivelchef'], ['class' => 'btn btn-info']) ?>
+        
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    
     ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        
         'filterModel' => $searchModel,
         'columns' => [
 

@@ -48,6 +48,7 @@ AppAsset::register($this);
                         ['label' => 'Usuarios registrados', 'url' => ['/usuarios', "pendiente" => "A"]],
                         ['label' => 'Usuarios pendientes', 'url' => ['/usuarios', "pendiente" => "P"]],
                         ['label' => 'Usuarios bloqueados', 'url' => ['/usuarios', "pendiente" => "B"]],
+                        ['label' => 'Notificaciones', 'url' => ['/notificaciones']],
 
                     ]],
                     ['label' => 'Recetas', 'items' => [
@@ -65,6 +66,7 @@ AppAsset::register($this);
                         ['label' => 'Comentarios', 'url' => ['/comentarios']],
                         ['label' => 'Subcomentarios', 'url' => ['/subcomentarios']],
                     ]],
+
                   
 
                 ];

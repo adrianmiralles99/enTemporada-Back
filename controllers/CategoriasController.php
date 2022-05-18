@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use yii\web\Controller;
+use yii\web\UploadedFile;
+
 use app\models\Categorias;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -87,8 +89,19 @@ class CategoriasController extends Controller
         $model = new Categorias();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                $fileUpload = UploadedFile::getInstance($model, 'eventImage');
+                if (!empty($fileUpload)) {
+                    $model->imagen = "IMG_REC_" . rand() . "." . $fileUpload->extension;
+                }
+                if ($model->save()) {
+                    //RUTA DE PROYECTO EN LOCALHOST
+                   // $path = realpath(dirname(getcwd())) . '/../assets/IMG/categorias/';
+                    //RUTA DE PROYECTO EN SERVER
+                    $path = realpath(dirname(getcwd())) . '/../../assets/IMG/categorias/';
+                    $fileUpload->saveAs($path . $model->imagen);
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }          
             }
         } else {
             $model->loadDefaultValues();
@@ -110,8 +123,29 @@ class CategoriasController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $fileUpload = UploadedFile::getInstance($model, 'eventImage');
+            if (!empty($fileUpload)) {
+                $lastImagen =  $model->imagen;
+                $model->imagen = "IMG_REC_" . rand() . "." . $fileUpload->extension;
+                if ($model->save()) {
+                    //RUTA DE PROYECTO EN LOCALHOST
+                    //$path = realpath(dirname(getcwd())) . '/../assets/IMG/categorias/';
+                    //RUTA DE PROYECTO EN SERVER
+                    $path = realpath(dirname(getcwd())) . '/../../assets/IMG/categorias/';
+                    // LA LINEA DE ABAJO SIRVE PARA BORRAR EN CASO DE TENER NOMBRES DIFERENTES
+                    if (file_exists($path . $lastImagen)) {
+                        unlink($path . $lastImagen);
+                    }
+                    // SUBIMOS LA IMAGEN
+                    $fileUpload->saveAs($path . $model->imagen);
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }else {
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
         }
 
         return $this->render('update', [

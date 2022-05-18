@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a973addecfa2040a73918abda938727c",
+    "content-hash": "6065879a90b82c30b76751305c1948fe",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -144,6 +144,55 @@
                 "source": "https://github.com/cebe/markdown"
             },
             "time": "2018-03-26T11:24:36+00:00"
+        },
+        {
+            "name": "daixianceng/yii2-echarts",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/daixianceng/yii2-echarts.git",
+                "reference": "511995efe02025b4b2d7f5723a5be668a06d1f2c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/daixianceng/yii2-echarts/zipball/511995efe02025b4b2d7f5723a5be668a06d1f2c",
+                "reference": "511995efe02025b4b2d7f5723a5be668a06d1f2c",
+                "shasum": ""
+            },
+            "require": {
+                "npm-asset/echarts": "*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "daixianceng\\echarts\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Cosmo",
+                    "email": "daixianceng@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Echarts widget for Yii2.",
+            "homepage": "https://github.com/daixianceng/yii2-echarts",
+            "keywords": [
+                "chart",
+                "echarts",
+                "extension",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/daixianceng/yii2-echarts/issues",
+                "source": "https://github.com/daixianceng/yii2-echarts"
+            },
+            "time": "2018-09-02T02:53:11+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -350,6 +399,49 @@
             "type": "npm-asset",
             "license": [
                 "MIT"
+            ]
+        },
+        {
+            "name": "npm-asset/echarts",
+            "version": "5.2.2",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/echarts/-/echarts-5.2.2.tgz"
+            },
+            "require": {
+                "npm-asset/tslib": "2.3.0",
+                "npm-asset/zrender": "5.2.1"
+            },
+            "type": "npm-asset",
+            "license": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "name": "npm-asset/tslib",
+            "version": "2.3.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/tslib/-/tslib-2.3.0.tgz"
+            },
+            "type": "npm-asset",
+            "license": [
+                "0BSD"
+            ]
+        },
+        {
+            "name": "npm-asset/zrender",
+            "version": "5.2.1",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/zrender/-/zrender-5.2.1.tgz"
+            },
+            "require": {
+                "npm-asset/tslib": "2.3.0"
+            },
+            "type": "npm-asset",
+            "license": [
+                "BSD-3-Clause"
             ]
         },
         {

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuarios */
@@ -16,11 +17,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1 class="titulo"><?= Html::encode($this->title) ?></h1>
     <br>
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Actualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Borrar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => '¿Estás seguro de que vas a borrar este item?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -37,7 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'imagen',
                 //'label' => "<img draggable=false height='50' width='50'style='border-radius:100%; margin-right:10px;' src='../../../upload/Usuarios/" . $model->imagen . "' alt='no va'>
                 'label' => 'Imagen',
-                
                 'format' => 'raw',
                 'value' => function ($model) {
                    $ret =  $model->imagen;
@@ -67,6 +67,43 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'token',
             // 'fecha_cad',
             'exp',
+            [
+                'attribute' => 'Nivel chef',
+                'label' => 'Nivel chef',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    if($model->exp >= 0 && $model->exp < 150){
+                       return "Nivel bronce";
+                    }else if($model->exp >= 150 && $model->exp <300){
+                        return "Nivel plata";
+                    }else if ($model->exp >= 300 && $model->exp <400){
+                        return "Nivel oro";
+                    }else if ($model->exp >= 400 && $model->exp < 475){
+                        return "Nivel platino";
+                    }else{
+                        return "Nivel diamante";
+                    }
+                 }
+            ],
+            [
+                'attribute' => '',
+                'label' => 'Notificaciones',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $ret = "<ul>";
+                    foreach ($model->getNotificaciones($model->id) as $valor){
+                       // $ruta = Url::to([$comentariosview, 'id' => $valor['id']]);
+                        $ret .= "<li class='notificacion'><strong>" .$valor['asunto'] . ":  </strong> "  . $valor['texto']. " </li>";        
+                    }
+                    $ret .= '</ul>';
+                   // $array = [];
+                   $view = "/notificaciones/create";
+                   $ruta = Url::to([$view]);
+                   $ret.="<button type='button' class='btn btn-dark'><a class='enlacenotificacion' href='$ruta'>Notificar</a> </button>";
+                    return $ret;
+                }
+            ],
+           
             // 'id_ultima_receta',
         ],
     ]) ?>
