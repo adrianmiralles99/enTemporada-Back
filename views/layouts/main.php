@@ -49,7 +49,6 @@ AppAsset::register($this);
                         ['label' => 'Usuarios pendientes', 'url' => ['/usuarios', "pendiente" => "P"]],
                         ['label' => 'Usuarios bloqueados', 'url' => ['/usuarios', "pendiente" => "B"]],
                         ['label' => 'Notificaciones', 'url' => ['/notificaciones']],
-
                     ]],
                     ['label' => 'Recetas', 'items' => [
                         ['label' => 'Recetas registradas', 'url' => ['/recetas', "pendiente" => "A"]],
@@ -61,14 +60,10 @@ AppAsset::register($this);
                         ['label' => 'Entradas pendientes', 'url' => ['/entradas', "estado" => "P"]],
                     ]],
                     ['label' => 'Reportes', 'url' => ['/reportes']],
-
                     ['label' => 'Comentarios', 'items' => [
                         ['label' => 'Comentarios', 'url' => ['/comentarios']],
                         ['label' => 'Subcomentarios', 'url' => ['/subcomentarios']],
                     ]],
-
-                  
-
                 ];
 
 

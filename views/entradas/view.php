@@ -68,17 +68,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'texto:ntext',
             [
                 'attribute' => 'imagen',
-                //'label' => "<img draggable=false height='50' width='50'style='border-radius:100%; margin-right:10px;' src='../../../upload/Usuarios/" . $model->imagen . "' alt='no va'>
                 'label' => 'Imagen',
-                
                 'format' => 'raw',
                 'value' => function ($model) {
-                   $ret =  $model->imagen;
-                   $ret .= "<br>";
-                   $ret.="<img draggable=false height='90' width='90'style=' margin-right:10px;' src='/../../assets/IMG/entradas/" . $model->imagen . "' alt='no va'>";
+                    $ret =  $model->imagen;
+                    $ret .= "<br>";
+                    $ret.="<img draggable=false height='90' width='90'style=' margin-right:10px;' 
+                    src='/../../assets/IMG/entradas/" . $model->imagen . "' alt='imagen de la entrada'>";
                     return $ret;
                 }
-
             ],           
              [
                 'attribute' => '',

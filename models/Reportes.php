@@ -1,6 +1,8 @@
 <?php
 
 namespace app\models;
+use app\models\Comentarios;
+use app\models\Subcomentarios;
 
 use Yii;
 
@@ -78,4 +80,11 @@ class Reportes extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Usuarios::className(), ['id' => 'id_usuarioreportado']);
     }
+    public function getComentario($id_comentario){
+        return Comentarios::find()->select(['texto'])->where(['id' => $id_comentario])->one();
+    }
+    public function getSubcomentario($id_subcomentario){
+        return Subcomentarios::find()->select(['texto'])->where(['id' => $id_subcomentario])->one();
+    }
+
 }

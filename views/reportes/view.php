@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Actualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Bprrar', ['delete', 'id' => $model->id], [
+        <?= Html::a('Borrar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => '¿Estás seguro de que vas a borrar este item?',
@@ -67,17 +67,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],  
             [
-                'attribute' => 'id_comentario',
+                'attribute' => 'Comentario',
                 'label' => $comment,
                 'format' => 'raw',
                 'value' => function ($data) {
+                    $comentario;
                     if ($data->tipo_comentario =="C"){
                         $vista = "/comentarios/view"; 
+                        $comentario = $data->getComentario($data->id_comentario);
                     }else{
                         $vista = "/subcomentarios/view";
+                        $comentario = $data->getSubcomentario($data->id_comentario);
+
                     }
                     $ruta = Url::to([$vista, 'id' => $data->id_comentario]);
-                    return "" .$data->id_comentario . "<br><a  href='$ruta'> <img src='../../../assets/IMG/backend/icono/ver.png' width='30px'height='30px'/></a>";
+                    return "ID: " .  $data->id_comentario ."<br>". $comentario["texto"]. 
+                    "<br><a  href='$ruta'> <img src='../../../assets/IMG/backend/icono/ver.png' width='30px'height='30px'/></a>";
                 }
             ],            
             [

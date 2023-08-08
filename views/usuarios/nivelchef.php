@@ -112,7 +112,7 @@ $colorPalette = ['#0b5ea4', '#0ffffc', '#feff02', '#e1f1ff', '#ed8d05'];
             ]); ?>
         </div>
         </div>
-        <div class="col-8 ">
+        <div class="col-4 ">
             <h5>Puntos de experiencia por usuario:</h5>
             <div class="mt-4">
             <?= ECharts::widget([
@@ -144,14 +144,12 @@ $colorPalette = ['#0b5ea4', '#0ffffc', '#feff02', '#e1f1ff', '#ed8d05'];
                                  'normal'=> [ 'color'=> '#175537' 
                                  ] 
                                 ],
-
                             'type'=>  'bar',
                             'showBackground'=> true,
                             'backgroundStyle'=>  [
                                 'color'=>  'rgba(23, 85, 55,0.2)'
                             ]
-                        ],
-                        
+                        ],     
                     ]
                 ]
             ]
